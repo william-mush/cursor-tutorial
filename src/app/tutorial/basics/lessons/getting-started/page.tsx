@@ -19,22 +19,22 @@ export default function GettingStartedLesson() {
             Getting Started with Cursor
           </h1>
           <p className="text-xl text-gray-600">
-            Master the latest Cursor features including Composer, advanced AI chat, codebase context, and Claude 3.5 Sonnet integration for professional development.
+            Master the latest Cursor 1.0 features including BugBot, Background Agent, Memories, Claude 4, and advanced AI capabilities for professional development.
           </p>
         </div>
 
         <TutorialNavigation />
 
         <div className="space-y-8 mt-8">
-          {/* What's New in Cursor 2024 */}
+          {/* What's New in Cursor 1.0 (2025) */}
           <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-8 border border-blue-200">
             <div className="flex items-center mb-6">
               <Sparkles className="w-8 h-8 text-blue-600 mr-4" />
-              <h2 className="text-2xl font-bold text-gray-900">What's New in Cursor 2024</h2>
+              <h2 className="text-2xl font-bold text-gray-900">What's New in Cursor 1.0 (2025)</h2>
             </div>
             
             <p className="text-gray-700 mb-6">
-              Cursor has revolutionized AI-assisted development with groundbreaking features that understand your entire codebase context.
+              Cursor 1.0 introduces revolutionary AI features including BugBot, Background Agent, Memories, and Claude 4 integration for next-generation development.
             </p>
 
             <div className="grid md:grid-cols-2 gap-6">
@@ -43,15 +43,15 @@ export default function GettingStartedLesson() {
                   <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center mr-4">
                     <Code2 className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900">Composer</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">BugBot</h3>
                 </div>
                 <p className="text-gray-600 mb-3">
-                  Multi-file editing with AI that understands your entire project structure and maintains context across files.
+                  Automates pull-request reviews by scanning GitHub PRs, providing inline comments for potential issues, and offering one-click fixes.
                 </p>
                 <ul className="text-sm text-gray-500 space-y-1">
-                  <li>• Edit multiple files simultaneously</li>
-                  <li>• Understands imports and dependencies</li>
-                  <li>• Maintains code consistency across files</li>
+                  <li>• Automated PR reviews</li>
+                  <li>• Inline issue detection</li>
+                  <li>• One-click fixes</li>
                 </ul>
               </div>
 
@@ -60,15 +60,15 @@ export default function GettingStartedLesson() {
                   <div className="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center mr-4">
                     <Brain className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900">Claude 3.5 Sonnet</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">Background Agent</h3>
                 </div>
                 <p className="text-gray-600 mb-3">
-                  Advanced AI model with enhanced reasoning capabilities and deep understanding of code patterns.
+                  Handles complex code tasks remotely by spinning up isolated environments for multi-file refactors and intensive operations.
                 </p>
                 <ul className="text-sm text-gray-500 space-y-1">
-                  <li>• Superior code generation quality</li>
-                  <li>• Better understanding of complex logic</li>
-                  <li>• Enhanced debugging capabilities</li>
+                  <li>• Remote task execution</li>
+                  <li>• Multi-file refactoring</li>
+                  <li>• Parallel agent processing</li>
                 </ul>
               </div>
 
@@ -77,15 +77,15 @@ export default function GettingStartedLesson() {
                   <div className="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center mr-4">
                     <FileText className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900">Codebase Context</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">Memories (Beta)</h3>
                 </div>
                 <p className="text-gray-600 mb-3">
-                  AI that understands your entire project structure, dependencies, and can reference specific files and functions.
+                  Enables AI to remember project-specific details like architectural decisions and naming conventions for enhanced context.
                 </p>
                 <ul className="text-sm text-gray-500 space-y-1">
-                  <li>• @-mentions for files and functions</li>
-                  <li>• Automatic dependency detection</li>
-                  <li>• Smart code suggestions based on project</li>
+                  <li>• Project-specific memory</li>
+                  <li>• Architectural decision tracking</li>
+                  <li>• Naming convention learning</li>
                 </ul>
               </div>
 
@@ -94,15 +94,15 @@ export default function GettingStartedLesson() {
                   <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center mr-4">
                     <Zap className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900">Performance</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">Claude 4 & Performance</h3>
                 </div>
                 <p className="text-gray-600 mb-3">
-                  Optimized for speed with faster AI responses, better memory management, and improved indexing.
+                  Latest Claude 4 model with significant performance improvements in startup time, indexing speed, and chat rendering.
                 </p>
                 <ul className="text-sm text-gray-500 space-y-1">
-                  <li>• 3x faster AI responses</li>
-                  <li>• Better memory management</li>
-                  <li>• Improved code indexing</li>
+                  <li>• Claude 4 integration</li>
+                  <li>• 3x faster startup</li>
+                  <li>• Enhanced indexing</li>
                 </ul>
               </div>
             </div>

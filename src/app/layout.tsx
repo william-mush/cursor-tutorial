@@ -8,16 +8,19 @@ import { StructuredData } from "@/components/StructuredData";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Cursor Tutorial - Master AI-Powered Development with Claude 3.5 Sonnet",
-  description: "Complete Cursor AI editor tutorial. Learn Cursor features, Composer, AI chat, code generation, and Claude 3.5 Sonnet integration. Free comprehensive guide for developers.",
+  title: "Cursor Tutorial - Master AI-Powered Development with Claude 4 & BugBot",
+  description: "Complete Cursor 1.0 tutorial. Learn BugBot, Background Agent, Memories, Claude 4, and latest AI features. Free comprehensive guide for developers.",
   keywords: [
     "Cursor tutorial",
-    "Cursor AI editor",
-    "Claude 3.5 Sonnet",
+    "Cursor 1.0",
+    "BugBot Cursor",
+    "Background Agent",
+    "Claude 4",
+    "Memories Cursor",
     "AI code generation",
     "Composer Cursor",
     "AI-assisted development",
-    "Cursor features",
+    "Cursor features 2025",
     "AI chat programming",
     "code generation tutorial",
     "AI development tools",
