@@ -1,11 +1,7 @@
-"use client";
-
-import { useState } from "react";
-import { ArrowRight, Play, Code2, Zap, Brain } from "lucide-react";
+import { ArrowRight, Code2, Zap, Brain } from "lucide-react";
 import Link from "next/link";
 
 export function Hero() {
-  const [isPlaying, setIsPlaying] = useState(false);
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50">
@@ -40,13 +36,6 @@ export function Hero() {
                   Start Learning
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>
-                <button
-                  onClick={() => setIsPlaying(!isPlaying)}
-                  className="inline-flex items-center px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-lg font-semibold hover:border-gray-400 hover:bg-gray-50 transition-all duration-200"
-                >
-                  <Play className="w-5 h-5 mr-2" />
-                  Watch Demo
-                </button>
               </div>
 
               {/* Stats */}
@@ -122,6 +111,7 @@ export function Hero() {
           </div>
         </div>
       </div>
+
     </section>
   );
 }
