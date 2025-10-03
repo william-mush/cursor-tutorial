@@ -36,7 +36,7 @@ export default function GettingStartedLesson() {
             </div>
             
             <p className="text-gray-600 mb-6">
-              Cursor is available for Windows, macOS, and Linux. Let's get it installed on your system.
+              Cursor is available for Windows, macOS, and Linux. Let&apos;s get it installed on your system.
             </p>
 
             <div className="space-y-4">
