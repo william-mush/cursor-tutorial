@@ -3,7 +3,14 @@
   "version": "1.0.0",
   "description": "A comprehensive tutorial website for learning Cursor, the AI-powered code editor",
   "private": true,
-  "keywords": ["cursor", "tutorial", "ai", "code-editor", "nextjs", "typescript"],
+  "keywords": [
+    "cursor",
+    "tutorial",
+    "ai",
+    "code-editor",
+    "nextjs",
+    "typescript"
+  ],
   "author": "Cursor Tutorial Team",
   "scripts": {
     "dev": "next dev --turbopack",
@@ -16,6 +23,7 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-tabs": "^1.1.13",
