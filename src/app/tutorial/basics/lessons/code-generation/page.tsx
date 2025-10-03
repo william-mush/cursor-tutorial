@@ -19,7 +19,7 @@ export default function CodeGenerationLesson() {
             AI-Powered Code Generation
           </h1>
           <p className="text-xl text-gray-600">
-            Master Cursor's code generation capabilities with Claude 3.5 Sonnet, Composer, and advanced AI features.
+            Master Cursor's code generation capabilities with Claude 4.5 Sonnet, Composer, and advanced AI features.
           </p>
         </div>
 
@@ -34,7 +34,7 @@ export default function CodeGenerationLesson() {
             </div>
             
             <p className="text-gray-700 mb-6">
-              Cursor's code generation is powered by Claude 3.5 Sonnet and understands your entire codebase context for intelligent, relevant code creation.
+              Cursor's code generation is powered by Claude 4.5 Sonnet and understands your entire codebase context for intelligent, relevant code creation.
             </p>
 
             <div className="grid md:grid-cols-3 gap-6">

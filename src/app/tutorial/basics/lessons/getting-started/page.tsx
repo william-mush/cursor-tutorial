@@ -296,7 +296,7 @@ export default function GettingStartedLesson() {
                   <CodeExample
                     language="json"
                     code={`{
-  "cursor.ai.model": "claude-3.5-sonnet",
+  "cursor.ai.model": "claude-4.5-sonnet",
   "cursor.ai.contextWindow": "large",
   "cursor.ai.includeImports": true,
   "cursor.ai.includeComments": true,

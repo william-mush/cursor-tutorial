@@ -4,11 +4,11 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Cursor Tutorial - Complete Guide to AI-Powered Development",
-  description: "Master Cursor AI editor with our comprehensive tutorial. Learn Claude 3.5 Sonnet, Composer, AI chat, code generation, and advanced features. Free step-by-step guide for developers.",
+  description: "Master Cursor AI editor with our comprehensive tutorial. Learn Claude 4.5 Sonnet, Composer, AI chat, code generation, and advanced features. Free step-by-step guide for developers.",
   keywords: [
     "Cursor tutorial",
     "Cursor AI editor guide",
-    "Claude 3.5 Sonnet tutorial",
+    "Claude 4.5 Sonnet tutorial",
     "AI code generation",
     "Composer Cursor tutorial",
     "AI-assisted development",
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Cursor Tutorial - Complete Guide to AI-Powered Development",
-    description: "Master Cursor AI editor with our comprehensive tutorial. Learn Claude 3.5 Sonnet, Composer, AI chat, code generation, and advanced features.",
+    description: "Master Cursor AI editor with our comprehensive tutorial. Learn Claude 4.5 Sonnet, Composer, AI chat, code generation, and advanced features.",
     type: "website",
   },
 };
@@ -28,13 +28,13 @@ const tutorials = [
   {
     id: "basics",
     title: "Cursor Basics Tutorial",
-    description: "Learn Cursor AI editor fundamentals: installation, interface, AI chat, Composer, and code generation with Claude 3.5 Sonnet",
+    description: "Learn Cursor AI editor fundamentals: installation, interface, AI chat, Composer, and code generation with Claude 4.5 Sonnet",
     icon: "🚀",
     href: "/tutorial/basics",
     lessons: [
       "Getting Started with Cursor AI Editor",
       "Understanding the Cursor Interface",
-      "AI Commands & Claude 3.5 Sonnet",
+      "AI Commands & Claude 4.5 Sonnet",
       "File Management & Navigation",
       "AI-Powered Code Generation"
     ]
@@ -95,7 +95,7 @@ export default function TutorialPage() {
             Complete Cursor AI Editor Tutorial
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Master Cursor AI editor with Claude 3.5 Sonnet, Composer, and AI-assisted development. 
+            Master Cursor AI editor with Claude 4.5 Sonnet, Composer, and AI-assisted development. 
             Comprehensive tutorials from beginner to expert level.
           </p>
         </div>

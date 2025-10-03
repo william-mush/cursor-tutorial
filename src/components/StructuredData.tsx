@@ -3,7 +3,7 @@ export function StructuredData() {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
     "name": "Cursor Tutorial",
-    "description": "Complete Cursor AI editor tutorial. Learn Cursor features, Composer, AI chat, code generation, and Claude 3.5 Sonnet integration.",
+    "description": "Complete Cursor AI editor tutorial. Learn Cursor features, Composer, AI chat, code generation, and Claude 4.5 Sonnet integration.",
     "url": "https://cursor-tutorial.vercel.app",
     "logo": "https://cursor-tutorial.vercel.app/logo.png",
     "sameAs": [
@@ -42,7 +42,7 @@ export function StructuredData() {
         {
           "@type": "Course",
           "name": "AI Commands & Features",
-          "description": "Master Cursor's AI capabilities including Claude 3.5 Sonnet, Composer, codebase context, and advanced code generation.",
+          "description": "Master Cursor's AI capabilities including Claude 4.5 Sonnet, Composer, codebase context, and advanced code generation.",
           "url": "https://cursor-tutorial.vercel.app/tutorial/basics/lessons/ai-commands",
           "provider": {
             "@type": "Organization",
@@ -62,7 +62,7 @@ export function StructuredData() {
         {
           "@type": "Course",
           "name": "AI-Powered Code Generation",
-          "description": "Master Cursor's code generation capabilities with Claude 3.5 Sonnet, Composer, and advanced AI features.",
+          "description": "Master Cursor's code generation capabilities with Claude 4.5 Sonnet, Composer, and advanced AI features.",
           "url": "https://cursor-tutorial.vercel.app/tutorial/basics/lessons/code-generation",
           "provider": {
             "@type": "Organization",
@@ -84,7 +84,7 @@ export function StructuredData() {
     "mainEntity": {
       "@type": "SoftwareApplication",
       "name": "Cursor AI Editor",
-      "description": "AI-powered code editor with Claude 3.5 Sonnet integration",
+      "description": "AI-powered code editor with Claude 4.5 Sonnet integration",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "Windows, macOS, Linux",
       "offers": {

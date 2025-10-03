@@ -56,7 +56,7 @@ export default function CursorSettingsLesson() {
                   <li className="flex items-start">
                     <span className="w-2 h-2 bg-purple-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
                     <div>
-                      <strong>Claude 3.5 Sonnet:</strong> Best for complex reasoning, code generation, and debugging
+                      <strong>Claude 4.5 Sonnet:</strong> Best for complex reasoning, code generation, and debugging
                     </div>
                   </li>
                   <li className="flex items-start">

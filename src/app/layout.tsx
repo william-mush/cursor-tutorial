@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Cursor Tutorial - Master AI-Powered Development",
-    description: "Complete Cursor AI editor tutorial. Learn Cursor features, Composer, AI chat, code generation, and Claude 3.5 Sonnet integration.",
+    description: "Complete Cursor AI editor tutorial. Learn Cursor features, Composer, AI chat, code generation, and Claude 4.5 Sonnet integration.",
     url: 'https://cursor-tutorial.vercel.app',
     siteName: 'Cursor Tutorial',
     images: [
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: "Cursor Tutorial - Master AI-Powered Development",
-    description: "Complete Cursor AI editor tutorial. Learn Cursor features, Composer, AI chat, code generation, and Claude 3.5 Sonnet integration.",
+    description: "Complete Cursor AI editor tutorial. Learn Cursor features, Composer, AI chat, code generation, and Claude 4.5 Sonnet integration.",
     images: ['/og-image.png'],
   },
   robots: {

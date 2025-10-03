@@ -19,7 +19,7 @@ export default function AICommandsLesson() {
             AI Commands & Features
           </h1>
           <p className="text-xl text-gray-600">
-            Master Cursor's AI capabilities including Claude 3.5 Sonnet, Composer, codebase context, and advanced code generation.
+            Master Cursor's AI capabilities including Claude 4.5 Sonnet, Composer, codebase context, and advanced code generation.
           </p>
         </div>
 
@@ -34,7 +34,7 @@ export default function AICommandsLesson() {
             </div>
             
             <p className="text-gray-700 mb-6">
-              Cursor's AI features are powered by Claude 3.5 Sonnet and designed to understand your entire codebase context.
+              Cursor's AI features are powered by Claude 4.5 Sonnet and designed to understand your entire codebase context.
             </p>
 
             <div className="grid md:grid-cols-3 gap-6">
@@ -44,7 +44,7 @@ export default function AICommandsLesson() {
                   <h3 className="text-lg font-semibold text-gray-900">AI Chat</h3>
                 </div>
                 <p className="text-gray-600 text-sm mb-3">
-                  Natural language conversations with Claude 3.5 Sonnet for code generation, debugging, and explanations.
+                  Natural language conversations with Claude 4.5 Sonnet for code generation, debugging, and explanations.
                 </p>
                 <div className="text-xs text-gray-500">
                   <strong>Access:</strong> Cmd+L (Mac) / Ctrl+L (Windows)
@@ -89,7 +89,7 @@ export default function AICommandsLesson() {
             </div>
 
             <p className="text-gray-600 mb-6">
-              The AI Chat (Cmd+L / Ctrl+L) is your primary interface for interacting with Claude 3.5 Sonnet.
+              The AI Chat (Cmd+L / Ctrl+L) is your primary interface for interacting with Claude 4.5 Sonnet.
             </p>
 
             <div className="space-y-8">

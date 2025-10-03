@@ -113,7 +113,7 @@ export default function InterfaceLesson() {
                       </div>
                       <div>
                         <div className="font-medium text-gray-900">AI Chat</div>
-                        <div className="text-sm text-gray-500">Chat with Claude 3.5 Sonnet</div>
+                        <div className="text-sm text-gray-500">Chat with Claude 4.5 Sonnet</div>
                       </div>
                     </div>
                     
@@ -215,7 +215,7 @@ export default function InterfaceLesson() {
             </div>
 
             <p className="text-gray-600 mb-6">
-              The AI Chat is your primary interface for interacting with Claude 3.5 Sonnet. Access it with Cmd+L (Mac) or Ctrl+L (Windows/Linux).
+              The AI Chat is your primary interface for interacting with Claude 4.5 Sonnet. Access it with Cmd+L (Mac) or Ctrl+L (Windows/Linux).
             </p>
 
             <div className="space-y-6">
