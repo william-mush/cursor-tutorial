@@ -18,13 +18,13 @@ export function Hero() {
                 <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
                   Master{" "}
                   <span className="gradient-text">
-                    Cursor
+                    Cursor AI Editor
                   </span>{" "}
                   Development
                 </h1>
                 <p className="text-xl text-gray-600 leading-relaxed">
-                  Learn to harness the power of AI-assisted coding with comprehensive tutorials, 
-                  real-world examples, and expert techniques for modern development.
+                  Complete Cursor tutorial with Claude 3.5 Sonnet, Composer, AI chat, and code generation. 
+                  Learn AI-assisted development with comprehensive guides, real-world examples, and expert techniques.
                 </p>
               </div>
 

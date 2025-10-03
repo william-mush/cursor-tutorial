@@ -1,61 +1,87 @@
 import { TutorialNavigation } from "@/components/TutorialNavigation";
 import { TutorialCard } from "@/components/TutorialCard";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Cursor Tutorial - Complete Guide to AI-Powered Development",
+  description: "Master Cursor AI editor with our comprehensive tutorial. Learn Claude 3.5 Sonnet, Composer, AI chat, code generation, and advanced features. Free step-by-step guide for developers.",
+  keywords: [
+    "Cursor tutorial",
+    "Cursor AI editor guide",
+    "Claude 3.5 Sonnet tutorial",
+    "AI code generation",
+    "Composer Cursor tutorial",
+    "AI-assisted development",
+    "Cursor features guide",
+    "AI programming tutorial",
+    "Cursor vs VS Code",
+    "AI development tools"
+  ],
+  openGraph: {
+    title: "Cursor Tutorial - Complete Guide to AI-Powered Development",
+    description: "Master Cursor AI editor with our comprehensive tutorial. Learn Claude 3.5 Sonnet, Composer, AI chat, code generation, and advanced features.",
+    type: "website",
+  },
+};
 
 const tutorials = [
   {
     id: "basics",
-    title: "Cursor Basics",
-    description: "Learn the fundamentals of using Cursor for development",
+    title: "Cursor Basics Tutorial",
+    description: "Learn Cursor AI editor fundamentals: installation, interface, AI chat, Composer, and code generation with Claude 3.5 Sonnet",
     icon: "🚀",
     href: "/tutorial/basics",
     lessons: [
-      "Getting Started with Cursor",
-      "Understanding the Interface",
-      "Basic AI Commands",
-      "File Management",
-      "Code Generation"
+      "Getting Started with Cursor AI Editor",
+      "Understanding the Cursor Interface",
+      "AI Commands & Claude 3.5 Sonnet",
+      "File Management & Navigation",
+      "AI-Powered Code Generation"
     ]
   },
   {
     id: "advanced",
-    title: "Advanced Features",
-    description: "Master advanced Cursor features and workflows",
+    title: "Advanced Cursor Features",
+    description: "Master advanced Cursor capabilities: settings optimization, prompt engineering, debugging with AI, and workflow automation",
     icon: "⚡",
     href: "/tutorial/advanced",
     lessons: [
-      "Custom AI Models",
-      "Advanced Prompts",
-      "Code Refactoring",
-      "Debugging with AI",
+      "Essential Cursor Settings",
+      "Advanced Prompt Engineering",
+      "AI-Assisted Debugging",
+      "Workflow Optimization",
+      "Custom Configurations",
+      "Team Collaboration",
       "Performance Optimization"
     ]
   },
   {
     id: "features",
-    title: "Key Features",
-    description: "Deep dive into Cursor's most powerful features",
+    title: "Cursor Key Features",
+    description: "Deep dive into Cursor's powerful AI features: Composer, codebase context, multi-file editing, and terminal integration",
     icon: "🎯",
     href: "/tutorial/features",
     lessons: [
-      "Chat Interface",
+      "AI Chat Interface",
+      "Composer Multi-file Editing",
+      "Codebase Context & @-mentions",
       "Code Completions",
-      "Codebase Understanding",
-      "Multi-file Editing",
       "Terminal Integration"
     ]
   },
   {
     id: "examples",
-    title: "Real Examples",
-    description: "See Cursor in action with real-world projects",
+    title: "Real-World Cursor Examples",
+    description: "See Cursor AI editor in action: React apps, APIs, databases, testing, and deployment with AI assistance",
     icon: "💡",
     href: "/tutorial/examples",
     lessons: [
-      "Building a React App",
-      "Creating APIs",
-      "Database Integration",
-      "Testing Strategies",
-      "Deployment Workflows"
+      "E-commerce Platform with Cursor",
+      "Task Management App",
+      "Blog CMS Development",
+      "API Dashboard Creation",
+      "Mobile App Development",
+      "Data Visualization Tools"
     ]
   }
 ];
@@ -66,10 +92,11 @@ export default function TutorialPage() {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Cursor Tutorial Hub
+            Complete Cursor AI Editor Tutorial
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Master AI-powered development with comprehensive tutorials designed to take you from beginner to expert.
+            Master Cursor AI editor with Claude 3.5 Sonnet, Composer, and AI-assisted development. 
+            Comprehensive tutorials from beginner to expert level.
           </p>
         </div>
 
