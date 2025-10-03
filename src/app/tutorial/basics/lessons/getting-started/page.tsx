@@ -19,7 +19,7 @@ export default function GettingStartedLesson() {
             Getting Started with Cursor
           </h1>
           <p className="text-xl text-gray-600">
-            Master the latest Cursor 1.0 features including BugBot, Background Agent, Memories, Claude 4, and advanced AI capabilities for professional development.
+            Master the latest Cursor 1.7.33 features including Browser Control, Hooks, Team Rules, Sandboxed Terminals, and advanced AI capabilities for professional development.
           </p>
         </div>
 
@@ -30,11 +30,11 @@ export default function GettingStartedLesson() {
           <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-8 border border-blue-200">
             <div className="flex items-center mb-6">
               <Sparkles className="w-8 h-8 text-blue-600 mr-4" />
-              <h2 className="text-2xl font-bold text-gray-900">What's New in Cursor 1.0 (2025)</h2>
+              <h2 className="text-2xl font-bold text-gray-900">What's New in Cursor 1.7.33 (2025)</h2>
             </div>
             
             <p className="text-gray-700 mb-6">
-              Cursor 1.0 introduces revolutionary AI features including BugBot, Background Agent, Memories, and Claude 4 integration for next-generation development.
+              Cursor 1.7.33 introduces groundbreaking features including Browser Control, Hooks, Team Rules, Sandboxed Terminals, and enhanced AI capabilities for next-generation development.
             </p>
 
             <div className="grid md:grid-cols-2 gap-6">
@@ -43,15 +43,15 @@ export default function GettingStartedLesson() {
                   <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center mr-4">
                     <Code2 className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900">BugBot</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">Browser Control</h3>
                 </div>
                 <p className="text-gray-600 mb-3">
-                  Automates pull-request reviews by scanning GitHub PRs, providing inline comments for potential issues, and offering one-click fixes.
+                  Agent can now take screenshots, improve UI, and debug client issues directly within your browser environment.
                 </p>
                 <ul className="text-sm text-gray-500 space-y-1">
-                  <li>• Automated PR reviews</li>
-                  <li>• Inline issue detection</li>
-                  <li>• One-click fixes</li>
+                  <li>• Screenshot capture</li>
+                  <li>• UI improvement suggestions</li>
+                  <li>• Client-side debugging</li>
                 </ul>
               </div>
 
@@ -60,15 +60,15 @@ export default function GettingStartedLesson() {
                   <div className="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center mr-4">
                     <Brain className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900">Background Agent</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">Hooks (Beta)</h3>
                 </div>
                 <p className="text-gray-600 mb-3">
-                  Handles complex code tasks remotely by spinning up isolated environments for multi-file refactors and intensive operations.
+                  Allows observation, control, and extension of the Agent loop using custom scripts for advanced workflow automation.
                 </p>
                 <ul className="text-sm text-gray-500 space-y-1">
-                  <li>• Remote task execution</li>
-                  <li>• Multi-file refactoring</li>
-                  <li>• Parallel agent processing</li>
+                  <li>• Custom script integration</li>
+                  <li>• Agent loop observation</li>
+                  <li>• Workflow automation</li>
                 </ul>
               </div>
 
@@ -77,15 +77,15 @@ export default function GettingStartedLesson() {
                   <div className="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center mr-4">
                     <FileText className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900">Memories (Beta)</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">Team Rules</h3>
                 </div>
                 <p className="text-gray-600 mb-3">
-                  Enables AI to remember project-specific details like architectural decisions and naming conventions for enhanced context.
+                  Teams can define and share global rules from the dashboard that apply to all projects for consistent development standards.
                 </p>
                 <ul className="text-sm text-gray-500 space-y-1">
-                  <li>• Project-specific memory</li>
-                  <li>• Architectural decision tracking</li>
-                  <li>• Naming convention learning</li>
+                  <li>• Global rule definition</li>
+                  <li>• Team-wide consistency</li>
+                  <li>• Dashboard management</li>
                 </ul>
               </div>
 
@@ -94,16 +94,72 @@ export default function GettingStartedLesson() {
                   <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center mr-4">
                     <Zap className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900">Claude 4 & Performance</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">Sandboxed Terminals</h3>
                 </div>
                 <p className="text-gray-600 mb-3">
-                  Latest Claude 4 model with significant performance improvements in startup time, indexing speed, and chat rendering.
+                  Commands now execute in a secure, sandboxed environment with enhanced security and isolated execution contexts.
                 </p>
                 <ul className="text-sm text-gray-500 space-y-1">
-                  <li>• Claude 4 integration</li>
-                  <li>• 3x faster startup</li>
-                  <li>• Enhanced indexing</li>
+                  <li>• Secure command execution</li>
+                  <li>• Isolated environments</li>
+                  <li>• Enhanced security</li>
                 </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* Latest Cursor 1.7.33 Features */}
+          <div className="bg-white rounded-lg shadow-lg p-8">
+            <div className="flex items-center mb-6">
+              <Zap className="w-8 h-8 text-green-600 mr-4" />
+              <h2 className="text-2xl font-bold text-gray-900">Latest Cursor 1.7.33 Features</h2>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <div className="border-l-4 border-blue-500 pl-4">
+                  <h3 className="text-lg font-semibold text-gray-900">Image File Support</h3>
+                  <p className="text-gray-600 text-sm">
+                    Agent can now read image files directly from your workspace and include them in context for visual analysis and UI development.
+                  </p>
+                </div>
+                
+                <div className="border-l-4 border-green-500 pl-4">
+                  <h3 className="text-lg font-semibold text-gray-900">PR Summaries from BugBot</h3>
+                  <p className="text-gray-600 text-sm">
+                    BugBot automatically generates comprehensive summaries of changes when creating pull requests in GitHub.
+                  </p>
+                </div>
+                
+                <div className="border-l-4 border-purple-500 pl-4">
+                  <h3 className="text-lg font-semibold text-gray-900">Share Prompts with Deeplinks</h3>
+                  <p className="text-gray-600 text-sm">
+                    Generate shareable deeplinks for reusable prompts, making it easy to share AI workflows with your team.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="border-l-4 border-orange-500 pl-4">
+                  <h3 className="text-lg font-semibold text-gray-900">Monitor Agents from Menubar</h3>
+                  <p className="text-gray-600 text-sm">
+                    Quickly check the status of Cursor Agents directly from your menubar for better workflow visibility.
+                  </p>
+                </div>
+                
+                <div className="border-l-4 border-red-500 pl-4">
+                  <h3 className="text-lg font-semibold text-gray-900">Autocomplete for Agent</h3>
+                  <p className="text-gray-600 text-sm">
+                    When writing prompts, autocomplete suggestions appear based on recent changes for more efficient AI interactions.
+                  </p>
+                </div>
+                
+                <div className="border-l-4 border-indigo-500 pl-4">
+                  <h3 className="text-lg font-semibold text-gray-900">Enhanced Security</h3>
+                  <p className="text-gray-600 text-sm">
+                    Sandboxed terminals and improved security measures ensure safe execution of commands and scripts.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
