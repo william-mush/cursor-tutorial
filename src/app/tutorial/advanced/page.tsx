@@ -5,6 +5,13 @@ import { ArrowRight, Code2, Zap, Target, Lightbulb, Settings } from "lucide-reac
 
 const advancedLessons = [
   {
+    id: "cursor-settings",
+    title: "Essential Cursor Settings",
+    description: "Master the most functional settings for maximum productivity and AI performance",
+    duration: "20 min",
+    difficulty: "Advanced"
+  },
+  {
     id: "prompt-engineering",
     title: "Advanced Prompt Engineering",
     description: "Master the art of writing effective prompts for complex AI interactions",
