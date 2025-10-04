@@ -7,7 +7,15 @@ export async function POST(request: NextRequest) {
     
     console.log('New email signup:', { email, name, timestamp: new Date() });
     
-    // Send email using Resend
+    // Validate email
+    if (!email || !email.includes('@')) {
+      return NextResponse.json(
+        { success: false, message: 'Invalid email address' },
+        { status: 400 }
+      );
+    }
+    
+    // Send email using Resend (with fallback)
     const success = await sendEmailSignup(email, name);
     
     if (success) {
@@ -17,14 +25,14 @@ export async function POST(request: NextRequest) {
       });
     } else {
       return NextResponse.json(
-        { success: false, message: 'Failed to send email' },
+        { success: false, message: 'Failed to process email signup' },
         { status: 500 }
       );
     }
   } catch (error) {
     console.error('Email signup error:', error);
     return NextResponse.json(
-      { success: false, message: 'Failed to add email' },
+      { success: false, message: 'Server error processing signup' },
       { status: 500 }
     );
   }

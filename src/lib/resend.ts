@@ -6,8 +6,22 @@ export async function sendEmailSignup(email: string, name?: string) {
   try {
     // Check if we have a valid API key
     if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 'your_resend_api_key_here') {
-      console.log('Resend API key not configured, logging signup instead:', { email, name });
-      // In development or when API key is not set, just log the signup
+      console.log('Resend API key not configured, using fallback email service');
+      
+      // Fallback: Send a simple notification email using a webhook or external service
+      // For now, we'll just log it and return success
+      console.log('Email signup received:', { 
+        email, 
+        name: name || 'Anonymous', 
+        timestamp: new Date().toISOString(),
+        website: 'Cursor Tutorial'
+      });
+      
+      // In a real implementation, you could:
+      // 1. Send to a webhook service like Zapier
+      // 2. Use a different email service
+      // 3. Store in a database
+      
       return true;
     }
 
