@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Mail, ArrowRight, CheckCircle } from "lucide-react";
-import { sendEmailSignup } from "@/lib/resend";
+// Remove direct import - we'll use the API route instead
 
 export function EmailCapture() {
   const [email, setEmail] = useState("");
@@ -14,13 +14,20 @@ export function EmailCapture() {
     setIsLoading(true);
     
     try {
-      const success = await sendEmailSignup(email);
+      const response = await fetch('/api/email-signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, name: 'Anonymous' }),
+      });
       
-      if (success) {
+      const data = await response.json();
+      
+      if (data.success) {
         setIsSubscribed(true);
       } else {
-        console.error('Failed to subscribe');
-        // You could add error state here
+        console.error('Failed to subscribe:', data.message);
       }
     } catch (error) {
       console.error('Subscription error:', error);
@@ -35,12 +42,20 @@ export function EmailCapture() {
     try {
       // For now, just use the email form with a placeholder
       // In a real implementation, you'd integrate with Google OAuth
-      const success = await sendEmailSignup('google-user@example.com', 'Google User');
+      const response = await fetch('/api/email-signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: 'google-user@example.com', name: 'Google User' }),
+      });
       
-      if (success) {
+      const data = await response.json();
+      
+      if (data.success) {
         setIsSubscribed(true);
       } else {
-        console.error('Google login failed');
+        console.error('Google login failed:', data.message);
       }
     } catch (error) {
       console.error('Google login error:', error);
