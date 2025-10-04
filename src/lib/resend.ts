@@ -1,9 +1,16 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder_key');
 
 export async function sendEmailSignup(email: string, name?: string) {
   try {
+    // Check if we have a valid API key
+    if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 'your_resend_api_key_here') {
+      console.log('Resend API key not configured, logging signup instead:', { email, name });
+      // In development or when API key is not set, just log the signup
+      return true;
+    }
+
     console.log('Sending email with Resend to:', email);
     
     const { data, error } = await resend.emails.send({
