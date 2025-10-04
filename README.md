@@ -126,4 +126,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-Built with ❤️ using Cursor and Next.js
+Built with ❤️ using Cursor and Next.js# Trigger Vercel rebuild Sat Oct  4 15:37:33 MDT 2025
