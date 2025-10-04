@@ -5,9 +5,9 @@ import emailjs from '@emailjs/browser';
 // After signing up, replace these with your actual credentials
 
 export const EMAILJS_CONFIG = {
-  serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID',
-  templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID',
-  publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY',
+  serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_kzjlr95',
+  templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_9djbz4n',
+  publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'jrMuW6cVDEX59FkvP',
 };
 
 // Initialize EmailJS
@@ -20,6 +20,11 @@ export function initEmailJS() {
 export async function sendEmailSignup(email: string, name?: string) {
   try {
     console.log('EmailJS Config:', EMAILJS_CONFIG);
+    console.log('Environment check:', {
+      serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+      templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+      publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
+    });
     console.log('Sending email to:', email);
     
     // Initialize EmailJS if not already done
