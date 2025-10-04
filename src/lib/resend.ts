@@ -28,7 +28,7 @@ export async function sendEmailSignup(email: string, name?: string) {
     console.log('Sending email with Resend to:', email);
     
     const { data, error } = await resend.emails.send({
-      from: 'Cursor Tutorial <noreply@cursortutorial.ai>',
+      from: 'Cursor Tutorial <onboarding@resend.dev>',
       to: ['emailjs@aboutus.org'],
       subject: 'New Cursor Tutorial Signup',
       html: `
@@ -42,7 +42,12 @@ export async function sendEmailSignup(email: string, name?: string) {
     });
 
     if (error) {
-      console.error('Resend error:', error);
+      console.error('Resend error details:', {
+        error,
+        message: error.message,
+        name: error.name,
+        statusCode: error.statusCode
+      });
       return false;
     }
 
