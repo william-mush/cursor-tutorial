@@ -32,11 +32,21 @@ export function EmailCapture() {
   const handleGoogleLogin = async () => {
     setIsLoading(true);
     
-    // Simulate Google OAuth flow
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    setIsSubscribed(true);
-    setIsLoading(false);
+    try {
+      // For now, just use the email form with a placeholder
+      // In a real implementation, you'd integrate with Google OAuth
+      const success = await sendEmailSignup('google-user@example.com', 'Google User');
+      
+      if (success) {
+        setIsSubscribed(true);
+      } else {
+        console.error('Google login failed');
+      }
+    } catch (error) {
+      console.error('Google login error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (isSubscribed) {

@@ -19,6 +19,9 @@ export function initEmailJS() {
 
 export async function sendEmailSignup(email: string, name?: string) {
   try {
+    console.log('EmailJS Config:', EMAILJS_CONFIG);
+    console.log('Sending email to:', email);
+    
     // Initialize EmailJS if not already done
     initEmailJS();
     
@@ -27,11 +30,12 @@ export async function sendEmailSignup(email: string, name?: string) {
       EMAILJS_CONFIG.serviceId,
       EMAILJS_CONFIG.templateId,
       {
-        to_email: 'your-email@example.com', // Replace with your email
+        to_email: 'emailjs@aboutus.org',
         from_email: email,
         from_name: name || 'Anonymous',
         message: `New email signup from Cursor Tutorial website!\n\nEmail: ${email}\nName: ${name || 'Not provided'}\nTimestamp: ${new Date().toLocaleString()}`,
         website: 'Cursor Tutorial',
+        timestamp: new Date().toLocaleString(),
       }
     );
     
@@ -39,6 +43,11 @@ export async function sendEmailSignup(email: string, name?: string) {
     return true;
   } catch (error) {
     console.error('EmailJS error:', error);
+    console.error('Error details:', {
+      serviceId: EMAILJS_CONFIG.serviceId,
+      templateId: EMAILJS_CONFIG.templateId,
+      publicKey: EMAILJS_CONFIG.publicKey,
+    });
     return false;
   }
 }
