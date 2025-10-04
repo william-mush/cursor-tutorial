@@ -1,24 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { sendEmailSignup } from '@/lib/resend';
 
-// For now, this just logs the email - you'll need to integrate with an email service
 export async function POST(request: NextRequest) {
   try {
     const { email, name } = await request.json();
     
-    // Log the signup (replace with actual email service)
     console.log('New email signup:', { email, name, timestamp: new Date() });
     
-    // TODO: Integrate with your preferred email service:
-    // - SendGrid
-    // - Mailchimp
-    // - ConvertKit
-    // - EmailJS
-    // - Resend
+    // Send email using Resend
+    const success = await sendEmailSignup(email, name);
     
-    return NextResponse.json({ 
-      success: true, 
-      message: 'Email added successfully!' 
-    });
+    if (success) {
+      return NextResponse.json({ 
+        success: true, 
+        message: 'Email added successfully!' 
+      });
+    } else {
+      return NextResponse.json(
+        { success: false, message: 'Failed to send email' },
+        { status: 500 }
+      );
+    }
   } catch (error) {
     console.error('Email signup error:', error);
     return NextResponse.json(

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Mail, ArrowRight, CheckCircle } from "lucide-react";
-import { sendEmailSignup } from "@/lib/emailjs";
+import { sendEmailSignup } from "@/lib/resend";
 
 export function EmailCapture() {
   const [email, setEmail] = useState("");
