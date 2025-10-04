@@ -1,9 +1,24 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder_key');
+// Initialize Resend with error handling
+let resend: Resend;
+try {
+  resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder_key');
+  console.log('Resend initialized successfully');
+} catch (error) {
+  console.error('Failed to initialize Resend:', error);
+  // Create a dummy resend object to prevent crashes
+  resend = {} as Resend;
+}
 
 export async function sendEmailSignup(email: string, name?: string) {
   try {
+    console.log('Resend API key check:', {
+      hasKey: !!process.env.RESEND_API_KEY,
+      keyLength: process.env.RESEND_API_KEY?.length,
+      keyPrefix: process.env.RESEND_API_KEY?.substring(0, 10)
+    });
+
     // Check if we have a valid API key
     if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 'your_resend_api_key_here') {
       console.log('Resend API key not configured, using fallback email service');
@@ -26,6 +41,18 @@ export async function sendEmailSignup(email: string, name?: string) {
     }
 
     console.log('Sending email with Resend to:', email);
+    
+    // Check if resend is properly initialized
+    if (!resend || !resend.emails) {
+      console.error('Resend not properly initialized, falling back to logging');
+      console.log('Email signup received (fallback):', { 
+        email, 
+        name: name || 'Anonymous', 
+        timestamp: new Date().toISOString(),
+        website: 'Cursor Tutorial'
+      });
+      return true;
+    }
     
     const { data, error } = await resend.emails.send({
       from: 'Cursor Tutorial <onboarding@resend.dev>',
