@@ -56,7 +56,7 @@ export async function sendEmailSignup(email: string, name?: string) {
     
     const { data, error } = await resend.emails.send({
       from: 'Cursor Tutorial <onboarding@resend.dev>',
-      to: ['emailjs@aboutus.org'],
+      to: ['mushkin@aboutus.org'],
       subject: 'New Cursor Tutorial Signup',
       html: `
         <h2>New email signup from Cursor Tutorial website!</h2>
