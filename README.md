@@ -129,3 +129,4 @@ This project is open source and available under the [MIT License](LICENSE).
 Built with ❤️ using Cursor and Next.js# Trigger Vercel rebuild Sat Oct  4 15:37:33 MDT 2025
 # Trigger rebuild Sat Oct  4 16:09:40 MDT 2025
 # Deploy Google OAuth Mon Oct  6 12:56:48 MDT 2025
+# Deploy with correct domain cursortutorial.ai Mon Oct  6 13:01:20 MDT 2025
