@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { StructuredData } from "@/components/StructuredData";
+import { SessionProvider } from "@/components/providers/AuthSessionProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -92,11 +93,13 @@ export default function RootLayout({
         <StructuredData />
       </head>
       <body className={inter.className}>
-        <Navigation />
-        <main className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-          {children}
-        </main>
-        <Footer />
+        <SessionProvider>
+          <Navigation />
+          <main className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+            {children}
+          </main>
+          <Footer />
+        </SessionProvider>
       </body>
     </html>
   );

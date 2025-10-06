@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 import { Mail, ArrowRight, CheckCircle } from "lucide-react";
-// Remove direct import - we'll use the API route instead
 
 export function EmailCapture() {
   const [email, setEmail] = useState("");
@@ -40,22 +40,16 @@ export function EmailCapture() {
     setIsLoading(true);
     
     try {
-      // For now, just use the email form with a placeholder
-      // In a real implementation, you'd integrate with Google OAuth
-      const response = await fetch('/api/email-signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: 'google-user@example.com', name: 'Google User' }),
+      // Trigger Google OAuth sign-in
+      const result = await signIn('google', {
+        redirect: false,
+        callbackUrl: '/',
       });
       
-      const data = await response.json();
-      
-      if (data.success) {
+      if (result?.ok) {
         setIsSubscribed(true);
       } else {
-        console.error('Google login failed:', data.message);
+        console.error('Google login failed:', result?.error);
       }
     } catch (error) {
       console.error('Google login error:', error);
