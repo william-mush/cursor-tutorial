@@ -25,12 +25,12 @@
 2. Name: **Cursor Tutorial Web Client**
 3. **Authorized JavaScript origins**:
    - `http://localhost:3000`
+   - `https://cursortutorial.ai`
    - `https://www.cursortutorial.ai`
-   - `https://cursor-tutorial.vercel.app`
 4. **Authorized redirect URIs**:
    - `http://localhost:3000/api/auth/callback/google`
+   - `https://cursortutorial.ai/api/auth/callback/google`
    - `https://www.cursortutorial.ai/api/auth/callback/google`
-   - `https://cursor-tutorial.vercel.app/api/auth/callback/google`
 5. Click **Create**
 6. **Copy the Client ID and Client Secret**
 
@@ -56,7 +56,7 @@ Add these environment variables in Vercel Dashboard → Settings → Environment
 
 1. **GOOGLE_CLIENT_ID**: Your Google Client ID
 2. **GOOGLE_CLIENT_SECRET**: Your Google Client Secret
-3. **NEXTAUTH_URL**: `https://www.cursortutorial.ai` (or your production URL)
+3. **NEXTAUTH_URL**: `https://cursortutorial.ai`
 4. **NEXTAUTH_SECRET**: Your generated secret
 
 ## Step 6: Test the Integration
