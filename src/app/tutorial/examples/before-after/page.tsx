@@ -1,13 +1,30 @@
-import { TutorialLayout } from "@/components/TutorialLayout";
-import { Clock, TrendingUp, Zap, CheckCircle } from "lucide-react";
+import { TutorialNavigation } from "@/components/TutorialNavigation";
+import Link from "next/link";
+import { ArrowLeft, Clock, TrendingUp, Zap, CheckCircle } from "lucide-react";
 
 export default function BeforeAfterPage() {
   return (
-    <TutorialLayout
-      title="Before & After - Real Cursor Productivity Gains"
-      description="See exactly how Cursor transforms development with real before/after examples and time savings"
-    >
-      <div className="prose prose-lg max-w-none">
+    <div className="container mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-8">
+          <Link 
+            href="/tutorial/examples" 
+            className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-4"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Examples
+          </Link>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            Before & After - Real Cursor Productivity Gains
+          </h1>
+          <p className="text-xl text-gray-600">
+            See exactly how Cursor transforms development with real before/after examples and time savings
+          </p>
+        </div>
+
+        <TutorialNavigation />
+
+        <div className="prose prose-lg max-w-none mt-8">
         <div className="bg-gradient-to-r from-green-50 to-blue-50 border-l-4 border-green-500 p-6 mb-8">
           <h3 className="text-green-900 mt-0 flex items-center">
             <TrendingUp className="w-6 h-6 mr-2" />
@@ -429,8 +446,11 @@ try {
           Now go apply these techniques and start tracking your time savings. 
           Return to the <a href="/tutorial" className="text-blue-600 hover:text-blue-800">main tutorials</a> to master each feature.
         </p>
+        </div>
+
+        <TutorialNavigation />
       </div>
-    </TutorialLayout>
+    </div>
   );
 }
 

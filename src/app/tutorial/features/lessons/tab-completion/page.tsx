@@ -1,12 +1,30 @@
-import { TutorialLayout } from "@/components/TutorialLayout";
+import { TutorialNavigation } from "@/components/TutorialNavigation";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 export default function TabCompletionPage() {
   return (
-    <TutorialLayout
-      title="Tab Completion - Your AI Pair Programmer"
-      description="Master Cursor's intelligent Tab completion for lightning-fast coding"
-    >
-      <div className="prose prose-lg max-w-none">
+    <div className="container mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-8">
+          <Link 
+            href="/tutorial/features" 
+            className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-4"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Features
+          </Link>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            Tab Completion - Your AI Pair Programmer
+          </h1>
+          <p className="text-xl text-gray-600">
+            Master Cursor's intelligent Tab completion for lightning-fast coding
+          </p>
+        </div>
+
+        <TutorialNavigation />
+
+        <div className="prose prose-lg max-w-none mt-8">
         <div className="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8">
           <h3 className="text-blue-900 mt-0">💡 What You&apos;ll Learn</h3>
           <ul className="mb-0">
@@ -179,8 +197,11 @@ export default function TabCompletionPage() {
             Cmd+K Inline Editing →
           </a>
         </p>
+        </div>
+
+        <TutorialNavigation />
       </div>
-    </TutorialLayout>
+    </div>
   );
 }
 

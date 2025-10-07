@@ -1,13 +1,30 @@
-import { TutorialLayout } from "@/components/TutorialLayout";
-import { Keyboard, Zap, Trophy, Brain } from "lucide-react";
+import { TutorialNavigation } from "@/components/TutorialNavigation";
+import Link from "next/link";
+import { ArrowLeft, Keyboard, Zap, Trophy, Brain } from "lucide-react";
 
 export default function KeyboardShortcutsPage() {
   return (
-    <TutorialLayout
-      title="Cursor Keyboard Shortcuts - Power User Guide"
-      description="Master all essential Cursor keyboard shortcuts and productivity hacks for 10x faster development"
-    >
-      <div className="prose prose-lg max-w-none">
+    <div className="container mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-8">
+          <Link 
+            href="/tutorial/advanced" 
+            className="inline-flex items-center text-blue-600 hover:text-blue-700 mb-4"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Advanced
+          </Link>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            Cursor Keyboard Shortcuts - Power User Guide
+          </h1>
+          <p className="text-xl text-gray-600">
+            Master all essential Cursor keyboard shortcuts and productivity hacks for 10x faster development
+          </p>
+        </div>
+
+        <TutorialNavigation />
+
+        <div className="prose prose-lg max-w-none mt-8">
         <div className="bg-gradient-to-r from-purple-50 to-blue-50 border-l-4 border-purple-500 p-6 mb-8">
           <h3 className="text-purple-900 mt-0 flex items-center">
             <Keyboard className="w-6 h-6 mr-2" />
@@ -420,8 +437,11 @@ export default function KeyboardShortcutsPage() {
             Workflow Optimization →
           </a>
         </p>
+        </div>
+
+        <TutorialNavigation />
       </div>
-    </TutorialLayout>
+    </div>
   );
 }
 
