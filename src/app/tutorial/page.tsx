@@ -57,16 +57,17 @@ const tutorials = [
   },
   {
     id: "features",
-    title: "Cursor Key Features",
-    description: "Deep dive into Cursor's powerful AI features: Composer, codebase context, multi-file editing, and terminal integration",
+    title: "Essential Cursor Features",
+    description: "Master the 6 core features: Tab completion, Cmd+K inline edit, Cmd+L chat, Composer, @ symbols, and .cursorrules",
     icon: "🎯",
     href: "/tutorial/features",
     lessons: [
-      "AI Chat Interface",
-      "Composer Multi-file Editing",
-      "Codebase Context & @-mentions",
-      "Code Completions",
-      "Terminal Integration"
+      "Tab Completion - AI Pair Programmer",
+      "Cmd+K Inline Edit - Surgical Changes",
+      "Cmd+L AI Chat - Ask & Debug",
+      "Composer - Multi-file Editing",
+      "@ Symbols - Context Mastery",
+      "Cursor Rules - Custom Instructions"
     ]
   },
   {

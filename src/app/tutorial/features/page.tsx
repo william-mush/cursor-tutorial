@@ -5,39 +5,46 @@ import { ArrowRight, MessageSquare, Code2, Brain, FileText, Terminal } from "luc
 
 const featureLessons = [
   {
-    id: "chat-interface",
-    title: "Chat Interface Mastery",
-    description: "Master the AI chat interface for maximum productivity",
-    duration: "20 min",
-    difficulty: "Beginner"
-  },
-  {
-    id: "code-completions",
-    title: "Code Completions",
-    description: "Leverage intelligent code suggestions and auto-completion",
+    id: "tab-completion",
+    title: "Tab Completion - AI Pair Programmer",
+    description: "Master intelligent Tab completion for 30-50% faster coding with multi-line predictions",
     duration: "15 min",
     difficulty: "Beginner"
   },
   {
-    id: "codebase-understanding",
-    title: "Codebase Understanding",
-    description: "Help Cursor understand your project structure and context",
+    id: "inline-edit",
+    title: "Cmd+K Inline Edit",
+    description: "Make surgical code changes with natural language - your precision editing tool",
+    duration: "12 min",
+    difficulty: "Beginner"
+  },
+  {
+    id: "ai-chat",
+    title: "Cmd+L AI Chat Interface",
+    description: "Ask questions, debug code, and explore your codebase with Claude 4.5 Sonnet",
+    duration: "18 min",
+    difficulty: "Beginner"
+  },
+  {
+    id: "composer",
+    title: "Composer - Multi-File Editing",
+    description: "Build entire features across multiple files with AI assistance",
+    duration: "20 min",
+    difficulty: "Intermediate"
+  },
+  {
+    id: "context-symbols",
+    title: "@ Symbols - Context Mastery",
+    description: "Use @Files, @Folders, @Codebase, @Docs, and @Web for 10x better AI responses",
     duration: "25 min",
     difficulty: "Intermediate"
   },
   {
-    id: "multi-file-editing",
-    title: "Multi-file Editing",
-    description: "Edit multiple files simultaneously with AI assistance",
-    duration: "18 min",
+    id: "cursor-rules",
+    title: "Cursor Rules - Custom AI Instructions",
+    description: "Create .cursorrules files to enforce coding standards and project conventions",
+    duration: "20 min",
     difficulty: "Intermediate"
-  },
-  {
-    id: "terminal-integration",
-    title: "Terminal Integration",
-    description: "Use the integrated terminal effectively with AI commands",
-    duration: "12 min",
-    difficulty: "Beginner"
   }
 ];
 
@@ -53,10 +60,11 @@ export default function FeaturesTutorials() {
             ← Back to Tutorials
           </Link>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Cursor Key Features
+            Essential Cursor Features - The Core Toolkit
           </h1>
           <p className="text-xl text-gray-600 mb-8">
-            Deep dive into Cursor's most powerful features and learn how to use them effectively.
+            Master the 6 essential features that make Cursor 10x more powerful than traditional editors. 
+            Start with Tab → Cmd+K → Chat, then progress to advanced features.
           </p>
         </div>
 
