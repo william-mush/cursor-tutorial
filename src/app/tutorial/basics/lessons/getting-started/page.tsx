@@ -1,14 +1,29 @@
-import { TutorialLayout } from "@/components/TutorialLayout";
 import Link from "next/link";
 import { Zap, Clock, CheckCircle, ArrowRight, Download, Play, Sparkles } from "lucide-react";
+import { TutorialNavigation } from "@/components/tutorial/TutorialNavigation";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Getting Started with Cursor 1.7.38",
+  description: "Be 10x faster in 10 minutes. Real quick wins, no fluff.",
+};
 
 export default function GettingStartedLesson() {
   return (
-    <TutorialLayout
-      title="Getting Started with Cursor 1.7.38"
-      description="Be 10x faster in 10 minutes. Real quick wins, no fluff."
-    >
-      <div className="prose prose-lg max-w-none">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="mb-8">
+          <Link 
+            href="/tutorial/basics"
+            className="text-blue-600 hover:text-blue-800 text-sm font-medium mb-4 inline-block"
+          >
+            ← Back to Basics
+          </Link>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Getting Started with Cursor 1.7.38</h1>
+          <p className="text-xl text-gray-600">Be 10x faster in 10 minutes. Real quick wins, no fluff.</p>
+        </div>
+
+        <div className="prose prose-lg max-w-none">
         <div className="bg-gradient-to-r from-green-50 to-blue-50 border-l-4 border-green-500 p-6 mb-8">
           <h3 className="text-green-900 mt-0 flex items-center">
             <Zap className="w-6 h-6 mr-2" />
@@ -428,7 +443,19 @@ export default function GettingStartedLesson() {
             The more you use it, the faster you&apos;ll get!
           </p>
         </div>
+        </div>
+
+        <TutorialNavigation
+          previousLesson={{
+            title: "Introduction",
+            href: "/tutorial/basics"
+          }}
+          nextLesson={{
+            title: "Tab Completion",
+            href: "/tutorial/features/lessons/tab-completion"
+          }}
+        />
       </div>
-    </TutorialLayout>
+    </div>
   );
 }
