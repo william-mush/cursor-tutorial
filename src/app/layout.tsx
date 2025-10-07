@@ -9,11 +9,11 @@ import { SessionProvider } from "@/components/providers/AuthSessionProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Cursor Tutorial - Master AI-Powered Development with Cursor 1.7.33",
-  description: "Complete Cursor 1.7.33 tutorial. Learn Browser Control, Hooks, Team Rules, Sandboxed Terminals, and latest AI features. Free comprehensive guide for developers.",
+  title: "Cursor Tutorial - Master AI-Powered Development with Cursor 1.7.38",
+  description: "Complete Cursor 1.7.38 tutorial. Learn Browser Control, Hooks, Team Rules, Sandboxed Terminals, and latest AI features. Free comprehensive guide for developers.",
   keywords: [
     "Cursor tutorial",
-    "Cursor 1.7.33",
+    "Cursor 1.7.38",
     "Browser Control Cursor",
     "Hooks Cursor",
     "Team Rules Cursor",
