@@ -113,6 +113,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     // Advanced Tutorials
     {
+      url: `${baseUrl}/tutorial/advanced/lessons/keyboard-shortcuts`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
       url: `${baseUrl}/tutorial/advanced/lessons/cursor-settings`,
       lastModified: now,
       changeFrequency: 'monthly',
@@ -154,7 +160,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.7,
     },
-    // Example Tutorials
+    // Example Tutorials  
+    {
+      url: `${baseUrl}/tutorial/examples/before-after`,
+      lastModified: now,
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
     {
       url: `${baseUrl}/tutorial/examples/ecommerce-platform`,
       lastModified: now,
