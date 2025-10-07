@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Zap, Clock, CheckCircle, ArrowRight, Download, Play, Sparkles } from "lucide-react";
-import { TutorialNavigation } from "@/components/tutorial/TutorialNavigation";
+import { TutorialNavigation } from "@/components/TutorialNavigation";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -445,16 +445,7 @@ export default function GettingStartedLesson() {
         </div>
         </div>
 
-        <TutorialNavigation
-          previousLesson={{
-            title: "Introduction",
-            href: "/tutorial/basics"
-          }}
-          nextLesson={{
-            title: "Tab Completion",
-            href: "/tutorial/features/lessons/tab-completion"
-          }}
-        />
+        <TutorialNavigation />
       </div>
     </div>
   );
