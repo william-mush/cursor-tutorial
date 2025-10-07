@@ -9,28 +9,42 @@ import { SessionProvider } from "@/components/providers/AuthSessionProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Cursor Tutorial - Master AI-Powered Development with Cursor 1.7.38",
-  description: "Complete Cursor 1.7.38 tutorial. Learn Browser Control, Hooks, Team Rules, Sandboxed Terminals, and latest AI features. Free comprehensive guide for developers.",
+  title: {
+    default: "Cursor Tutorial - Master AI-Powered Development with Cursor 1.7.38",
+    template: "%s | Cursor Tutorial"
+  },
+  description: "Complete Cursor 1.7.38 tutorial with Tab completion, Cmd+K, AI Chat, Composer, and Claude 4.5 Sonnet. Learn AI-powered development in 10 minutes. Free guide with real examples.",
   keywords: [
+    // Core Features
     "Cursor tutorial",
-    "Cursor 1.7.38",
+    "Cursor 1.7.38 guide",
+    "Cursor AI editor",
+    "Tab completion Cursor",
+    "Cmd+K Cursor inline edit",
+    "Cursor AI chat",
+    "Cursor Composer",
+    "@ symbols Cursor",
+    ".cursorrules",
+    // AI & Development
+    "Claude 4.5 Sonnet",
+    "AI code generation",
+    "AI-assisted development",
+    "AI programming assistant",
+    "AI pair programming",
+    // Features
     "Browser Control Cursor",
     "Hooks Cursor",
     "Team Rules Cursor",
     "Sandboxed Terminals",
-    "Image File Support",
-    "AI code generation",
-    "Composer Cursor",
-    "AI-assisted development",
-    "Cursor features 2025",
-    "AI chat programming",
-    "code generation tutorial",
-    "AI development tools",
-    "Cursor settings",
-    "AI programming assistant",
+    "multi-file editing",
+    "codebase context",
+    // Comparisons & SEO
     "Cursor vs VS Code",
-    "AI coding tutorial",
-    "programming with AI"
+    "Cursor vs GitHub Copilot",
+    "best AI code editor",
+    "AI coding tutorial 2025",
+    "Cursor keyboard shortcuts",
+    "Cursor productivity tips"
   ],
   authors: [{ name: "Cursor Tutorial Team" }],
   creator: "Cursor Tutorial",
@@ -40,21 +54,24 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://cursor-tutorial.vercel.app'),
+  metadataBase: new URL('https://cursortutorial.ai'),
   alternates: {
     canonical: '/',
   },
+  applicationName: 'Cursor Tutorial',
+  category: 'education',
+  classification: 'Tutorial',
   openGraph: {
-    title: "Cursor Tutorial - Master AI-Powered Development",
-    description: "Complete Cursor AI editor tutorial. Learn Cursor features, Composer, AI chat, code generation, and Claude 4.5 Sonnet integration.",
-    url: 'https://cursor-tutorial.vercel.app',
+    title: "Cursor Tutorial - Master AI-Powered Development with Cursor 1.7.38",
+    description: "Complete Cursor 1.7.38 tutorial with Tab completion, Cmd+K, AI Chat, Composer, and Claude 4.5 Sonnet. Learn in 10 minutes with real examples.",
+    url: 'https://cursortutorial.ai',
     siteName: 'Cursor Tutorial',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Cursor Tutorial - Master AI-Powered Development',
+        alt: 'Cursor Tutorial - Master AI-Powered Development with Tab, Cmd+K, Chat, and Composer',
       },
     ],
     locale: 'en_US',
@@ -62,9 +79,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Cursor Tutorial - Master AI-Powered Development",
-    description: "Complete Cursor AI editor tutorial. Learn Cursor features, Composer, AI chat, code generation, and Claude 4.5 Sonnet integration.",
+    title: "Cursor Tutorial - Master AI Development in 10 Minutes",
+    description: "Complete Cursor 1.7.38 tutorial: Tab completion, Cmd+K, AI Chat, Composer. Real examples with Claude 4.5 Sonnet.",
     images: ['/og-image.png'],
+    creator: '@cursortutorial',
   },
   robots: {
     index: true,
