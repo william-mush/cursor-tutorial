@@ -22,7 +22,9 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check-version": "node scripts/check-cursor-version.js",
-    "update-version": "node scripts/update-version.js"
+    "update-version": "node scripts/update-version.js",
+    "auto-detect": "node scripts/auto-detect-and-update.js",
+    "fetch-version": "node scripts/fetch-cursor-version-real.js"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
