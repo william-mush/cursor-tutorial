@@ -10,14 +10,15 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "Cursor Tutorial - Master AI-Powered Development with Cursor 1.7.39",
+    default: "Cursor Tutorial - Master AI-Powered Development with Cursor 1.7",
     template: "%s | Cursor Tutorial"
   },
   description: "Complete Cursor 1.7.39 tutorial with Tab completion, Cmd+K, AI Chat, Composer, and Claude 4.5 Sonnet. Learn AI-powered development in 10 minutes. Free guide with real examples.",
   keywords: [
     // Core Features
     "Cursor tutorial",
-    "Cursor 1.7.39 guide",
+    "Cursor 1.7 guide",
+    "Cursor 1.7.39",
     "Cursor AI editor",
     "Tab completion Cursor",
     "Cmd+K Cursor inline edit",
@@ -62,7 +63,7 @@ export const metadata: Metadata = {
   category: 'education',
   classification: 'Tutorial',
   openGraph: {
-    title: "Cursor Tutorial - Master AI-Powered Development with Cursor 1.7.39",
+    title: "Cursor Tutorial - Master AI-Powered Development with Cursor 1.7",
     description: "Complete Cursor 1.7.39 tutorial with Tab completion, Cmd+K, AI Chat, Composer, and Claude 4.5 Sonnet. Learn in 10 minutes with real examples.",
     url: 'https://cursortutorial.ai',
     siteName: 'Cursor Tutorial',
