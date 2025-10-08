@@ -4,7 +4,7 @@ import { TutorialNavigation } from "@/components/TutorialNavigation";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Getting Started with Cursor 1.7.38",
+  title: "Getting Started with Cursor 1.7.39",
   description: "Be 10x faster in 10 minutes. Real quick wins, no fluff.",
 };
 
@@ -19,7 +19,7 @@ export default function GettingStartedLesson() {
           >
             ← Back to Basics
           </Link>
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Getting Started with Cursor 1.7.38</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Getting Started with Cursor 1.7.39</h1>
           <p className="text-xl text-gray-600">Be 10x faster in 10 minutes. Real quick wins, no fluff.</p>
         </div>
 

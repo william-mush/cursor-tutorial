@@ -1,0 +1,102 @@
+name: Update Cursor Version
+
+on:
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Fetch latest Cursor version
+        id: cursor-version
+        run: |
+          # Fetch the latest release from Cursor's download page or GitHub
+          # Method 1: Check Cursor's official releases (if they have a public API)
+          # Method 2: Scrape the download page
+          # Method 3: Check GitHub releases if Cursor is open source
+          
+          # For now, we'll use a combination approach
+          # Try to get version from Cursor's download page
+          VERSION=$(curl -s https://www.cursor.com/download | grep -oP 'Version[:\s]+\K[\d\.]+' | head -1 || echo "")
+          
+          # If that fails, try alternate method
+          if [ -z "$VERSION" ]; then
+            # Try to get from GitHub releases API (if available)
+            VERSION=$(curl -s https://api.github.com/repos/getcursor/cursor/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/' | sed 's/v//' || echo "")
+          fi
+          
+          # If still empty, try checking their changelog or alternate endpoints
+          if [ -z "$VERSION" ]; then
+            # Fallback: Check via their update endpoint
+            VERSION=$(curl -s https://www.cursor.com/api/version | grep -oP '[\d\.]+' | head -1 || echo "")
+          fi
+          
+          # If we still don't have a version, exit
+          if [ -z "$VERSION" ]; then
+            echo "Failed to fetch Cursor version"
+            exit 1
+          fi
+          
+          echo "Found version: $VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+      
+      - name: Read current version
+        id: current-version
+        run: |
+          # Extract current version from Hero.tsx
+          CURRENT=$(grep -oP 'Cursor \K[\d\.]+' src/components/Hero.tsx | head -1)
+          echo "current=$CURRENT" >> $GITHUB_OUTPUT
+          echo "Current version in codebase: $CURRENT"
+      
+      - name: Update version in files
+        if: steps.cursor-version.outputs.version != steps.current-version.outputs.current
+        run: |
+          NEW_VERSION="${{ steps.cursor-version.outputs.version }}"
+          OLD_VERSION="${{ steps.current-version.outputs.current }}"
+          
+          echo "Updating from $OLD_VERSION to $NEW_VERSION"
+          
+          # Run the update script
+          node scripts/update-version.js "$NEW_VERSION"
+      
+      - name: Commit and push changes
+        if: steps.cursor-version.outputs.version != steps.current-version.outputs.current
+        run: |
+          git config --global user.name 'Cursor Version Bot'
+          git config --global user.email 'bot@cursortutorial.ai'
+          
+          git add -A
+          git commit -m "🤖 Auto-update: Cursor version ${{ steps.cursor-version.outputs.version }}"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Create summary
+        run: |
+          echo "## Cursor Version Update" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Previous Version:** ${{ steps.current-version.outputs.current }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **New Version:** ${{ steps.cursor-version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.cursor-version.outputs.version }}" != "${{ steps.current-version.outputs.current }}" ]; then
+            echo "- **Status:** ✅ Updated" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- **Status:** ℹ️ Already up to date" >> $GITHUB_STEP_SUMMARY
+          fi
+

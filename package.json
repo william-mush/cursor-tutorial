@@ -20,7 +20,9 @@
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
     "type-check": "tsc --noEmit",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "check-version": "node scripts/check-cursor-version.js",
+    "update-version": "node scripts/update-version.js"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
