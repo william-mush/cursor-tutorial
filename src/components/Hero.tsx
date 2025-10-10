@@ -1,5 +1,6 @@
 import { ArrowRight, Code2, Zap, Brain } from "lucide-react";
 import Link from "next/link";
+import { SearchBar } from "./search/SearchBar";
 
 export function Hero() {
 
@@ -26,6 +27,21 @@ export function Hero() {
                   Complete Cursor 1.7.39 tutorial with Browser Control, Hooks, Team Rules, Sandboxed Terminals, and latest AI features. 
                   Learn next-generation AI-assisted development with comprehensive guides and real-world examples.
                 </p>
+              </div>
+
+              {/* AI Search Bar */}
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border-2 border-blue-200">
+                <div className="mb-3">
+                  <h2 className="text-lg font-semibold text-gray-900 flex items-center">
+                    <Brain className="w-5 h-5 mr-2 text-blue-600" />
+                    Ask AI About Cursor
+                  </h2>
+                  <p className="text-sm text-gray-600">Voice-enabled • Instant answers</p>
+                </div>
+                <SearchBar 
+                  placeholder="How do I use Tab completion?"
+                  showSuggestions={false}
+                />
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">

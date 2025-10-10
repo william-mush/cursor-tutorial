@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X, Code2, BookOpen, Zap, Lightbulb } from "lucide-react";
+import { Menu, X, Code2, BookOpen, Zap, Lightbulb, Search } from "lucide-react";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,6 +12,7 @@ export function Navigation() {
     { href: "/tutorial", label: "Tutorials", icon: BookOpen },
     { href: "/tutorial/basics", label: "Basics", icon: Zap },
     { href: "/tutorial/examples", label: "Examples", icon: Lightbulb },
+    { href: "/search", label: "AI Search", icon: Search },
   ];
 
   return (
@@ -32,7 +33,9 @@ export function Navigation() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
+                className={`flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors ${
+                  item.label === "AI Search" ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700" : ""
+                }`}
               >
                 <item.icon className="w-4 h-4" />
                 <span>{item.label}</span>
