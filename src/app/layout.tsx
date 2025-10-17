@@ -5,6 +5,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { StructuredData } from "@/components/StructuredData";
 import { SessionProvider } from "@/components/providers/AuthSessionProvider";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,12 +14,12 @@ export const metadata: Metadata = {
     default: "Cursor Tutorial - Master AI-Powered Development with Cursor 1.7",
     template: "%s | Cursor Tutorial"
   },
-  description: "Complete Cursor 1.7.39 tutorial with Tab completion, Cmd+K, AI Chat, Composer, and Claude 4.5 Sonnet. Learn AI-powered development in 10 minutes. Free guide with real examples.",
+  description: "Complete Cursor 1.7.52 tutorial with Tab completion, Cmd+K, AI Chat, Composer, and Claude 4.5 Sonnet. Learn AI-powered development in 10 minutes. Free guide with real examples.",
   keywords: [
     // Core Features
     "Cursor tutorial",
     "Cursor 1.7 guide",
-    "Cursor 1.7.39",
+    "Cursor 1.7.52",
     "Cursor AI editor",
     "Tab completion Cursor",
     "Cmd+K Cursor inline edit",
@@ -64,7 +65,7 @@ export const metadata: Metadata = {
   classification: 'Tutorial',
   openGraph: {
     title: "Cursor Tutorial - Master AI-Powered Development with Cursor 1.7",
-    description: "Complete Cursor 1.7.39 tutorial with Tab completion, Cmd+K, AI Chat, Composer, and Claude 4.5 Sonnet. Learn in 10 minutes with real examples.",
+    description: "Complete Cursor 1.7.52 tutorial with Tab completion, Cmd+K, AI Chat, Composer, and Claude 4.5 Sonnet. Learn in 10 minutes with real examples.",
     url: 'https://cursortutorial.ai',
     siteName: 'Cursor Tutorial',
     images: [
@@ -81,7 +82,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: "Cursor Tutorial - Master AI Development in 10 Minutes",
-    description: "Complete Cursor 1.7.39 tutorial: Tab completion, Cmd+K, AI Chat, Composer. Real examples with Claude 4.5 Sonnet.",
+    description: "Complete Cursor 1.7.52 tutorial: Tab completion, Cmd+K, AI Chat, Composer. Real examples with Claude 4.5 Sonnet.",
     images: ['/og-image.png'],
     creator: '@cursortutorial',
   },
@@ -119,6 +120,7 @@ export default function RootLayout({
           </main>
           <Footer />
         </SessionProvider>
+        <Analytics />
       </body>
     </html>
   );
