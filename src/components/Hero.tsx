@@ -24,7 +24,7 @@ export function Hero() {
                   Development
                 </h1>
                 <p className="text-xl text-gray-600 leading-relaxed">
-                  Complete Cursor 1.7.52 tutorial with Browser Control, Hooks, Team Rules, Sandboxed Terminals, and latest AI features. 
+                  Complete Cursor 1.7.52 tutorial with Browser Control, Hooks, Team Rules, Sandboxed Terminals, and latest AI features.
                   Learn next-generation AI-assisted development with comprehensive guides and real-world examples.
                 </p>
               </div>
