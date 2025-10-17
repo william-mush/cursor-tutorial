@@ -42,8 +42,7 @@ export async function searchSimilarContent(
     const { data, error } = await supabaseAdmin.rpc('search_cursor_content', {
       query_embedding: queryEmbedding,
       match_threshold: matchThreshold,
-      match_count: matchCount,
-      metadata_filter: metadataFilter
+      match_count: matchCount
     });
 
     if (error) {
