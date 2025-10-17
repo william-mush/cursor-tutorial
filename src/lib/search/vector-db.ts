@@ -1,4 +1,4 @@
-import { supabaseAdmin, CursorContent } from './supabase-client';
+import { getSupabaseAdminClient, CursorContent } from './supabase-client';
 import { generateEmbedding } from './embeddings';
 
 export interface SearchResult {
@@ -38,6 +38,7 @@ export async function searchSimilarContent(
     if (filter.category) metadataFilter = { ...metadataFilter, category: filter.category };
 
     // Search using Supabase's vector similarity function
+    const supabaseAdmin = getSupabaseAdminClient();
     const { data, error } = await supabaseAdmin.rpc('search_cursor_content', {
       query_embedding: queryEmbedding,
       match_threshold: matchThreshold,
@@ -74,6 +75,7 @@ export async function insertContent(
     const embedding = await generateEmbedding(content);
 
     // Insert into database
+    const supabaseAdmin = getSupabaseAdminClient();
     const { error } = await supabaseAdmin
       .from('cursor_content')
       .insert({
@@ -111,7 +113,8 @@ export async function insertContentBatch(
     const chunkSize = 100;
     for (let i = 0; i < rows.length; i += chunkSize) {
       const chunk = rows.slice(i, i + chunkSize);
-      const { error } = await supabaseAdmin
+      const supabaseAdmin = getSupabaseAdminClient();
+    const { error } = await supabaseAdmin
         .from('cursor_content')
         .insert(chunk);
 
@@ -136,6 +139,7 @@ export async function updateContent(
   try {
     const embedding = await generateEmbedding(content);
 
+    const supabaseAdmin = getSupabaseAdminClient();
     const { error } = await supabaseAdmin
       .from('cursor_content')
       .update({
@@ -158,6 +162,7 @@ export async function updateContent(
  */
 export async function deleteContent(id: string): Promise<void> {
   try {
+    const supabaseAdmin = getSupabaseAdminClient();
     const { error } = await supabaseAdmin
       .from('cursor_content')
       .delete()
@@ -177,6 +182,7 @@ export async function deleteContentBySource(
   source: CursorContent['metadata']['source']
 ): Promise<void> {
   try {
+    const supabaseAdmin = getSupabaseAdminClient();
     const { error } = await supabaseAdmin
       .from('cursor_content')
       .delete()

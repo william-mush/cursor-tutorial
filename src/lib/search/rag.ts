@@ -3,7 +3,7 @@ import { searchSimilarContent, SearchResult } from './vector-db';
 import { getSupabaseAdminClient } from './supabase-client';
 
 const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
+  apiKey: process.env.Claude_My_Secret_Key,
 });
 
 export interface RAGResponse {
