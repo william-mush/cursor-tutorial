@@ -2,7 +2,7 @@
 const https = require('https');
 
 // Replace with your actual domain
-const DOMAIN = 'cursortutorials.com'; // Update this with your actual domain
+const DOMAIN = 'www.cursortutorial.ai';
 
 async function testEndpoint(path) {
   return new Promise((resolve, reject) => {

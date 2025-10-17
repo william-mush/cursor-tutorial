@@ -11,16 +11,39 @@ async function testSearchFunctionality() {
     console.log('🌐 Opening your website...');
     
     // Replace with your actual domain
-    const domain = 'cursortutorials.com'; // Update this!
+    const domain = 'www.cursortutorial.ai';
     await page.goto(`https://${domain}`);
     
     console.log('✅ Page loaded');
     
-    // Wait for search bar to be visible
-    console.log('🔍 Looking for search bar...');
-    await page.waitForSelector('input[placeholder*="Tab completion"]', { timeout: 10000 });
+    // Wait for page to load and check what's there
+    console.log('🔍 Checking page content...');
+    await page.waitForLoadState('networkidle');
     
-    console.log('✅ Search bar found');
+    // Take a screenshot first to see what's on the page
+    await page.screenshot({ path: 'page-load.png' });
+    console.log('📸 Screenshot saved as page-load.png');
+    
+    // Check for any input fields
+    const inputs = await page.locator('input').count();
+    console.log(`Found ${inputs} input fields on the page`);
+    
+    // Look for search-related elements
+    const searchElements = await page.locator('[placeholder*="search"], [placeholder*="Search"], [placeholder*="Tab"], input[type="text"]').count();
+    console.log(`Found ${searchElements} search-related elements`);
+    
+    // Check page title and content
+    const title = await page.title();
+    console.log('Page title:', title);
+    
+    // Look for any text containing "search" or "AI"
+    const searchText = await page.locator('text=/search|Search|AI|Ask/i').count();
+    console.log(`Found ${searchText} elements with search/AI text`);
+    
+    if (searchElements === 0) {
+      console.log('❌ No search elements found. Page might not be loading correctly.');
+      return;
+    }
     
     // Test search functionality
     console.log('📝 Testing search...');

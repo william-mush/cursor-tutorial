@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { supabaseAdmin } from '@/lib/search/supabase-client';
+import { getSupabaseAdminClient } from '@/lib/search/supabase-client';
 
 export const runtime = 'nodejs';
 
@@ -37,6 +37,7 @@ export async function GET() {
   if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
     try {
       // Test database connection
+      const supabaseAdmin = getSupabaseAdminClient();
       const { error } = await supabaseAdmin
         .from('cursor_content')
         .select('count')

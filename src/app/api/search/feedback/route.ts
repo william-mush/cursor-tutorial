@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabaseAdmin } from '@/lib/search/supabase-client';
+import { getSupabaseAdminClient } from '@/lib/search/supabase-client';
 
 export const runtime = 'nodejs';
 
@@ -37,6 +37,7 @@ export async function POST(request: NextRequest) {
 
     // If queryId is provided, update existing record
     if (queryId) {
+      const supabaseAdmin = getSupabaseAdminClient();
       const { error } = await supabaseAdmin
         .from('search_queries')
         .update({
@@ -51,6 +52,7 @@ export async function POST(request: NextRequest) {
       }
     } else if (query) {
       // If no queryId, try to find recent matching query
+      const supabaseAdmin = getSupabaseAdminClient();
       const { data: recentQueries, error: selectError } = await supabaseAdmin
         .from('search_queries')
         .select('id')
@@ -64,6 +66,7 @@ export async function POST(request: NextRequest) {
       }
 
       if (recentQueries && recentQueries.length > 0) {
+        const supabaseAdmin = getSupabaseAdminClient();
         const { error: updateError } = await supabaseAdmin
           .from('search_queries')
           .update({
