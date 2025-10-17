@@ -37,9 +37,7 @@ export function getSupabaseAdminClient() {
   return supabaseAdminClient;
 }
 
-// Backward compatibility exports
-export const supabase = getSupabaseClient;
-export const supabaseAdmin = getSupabaseAdminClient;
+// Backward compatibility exports - removed to avoid confusion
 
 // Database types
 export interface CursorContent {
