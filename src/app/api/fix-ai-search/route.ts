@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getSupabaseAdminClient } from '@/lib/search/supabase-client';
 import { generateEmbedding } from '@/lib/search/embeddings';
+import OpenAI from 'openai';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -40,6 +41,25 @@ export async function POST() {
           }
           
           console.log(`🔄 Generating embedding for: ${item.metadata?.title || item.id}`);
+          console.log(`Content length: ${item.content.length}`);
+          console.log(`Content preview: ${item.content.substring(0, 100)}...`);
+          
+          // Test OpenAI client creation first
+          console.log('Testing OpenAI client creation...');
+          const openai = new OpenAI({
+            apiKey: process.env.OPENAI_API_KEY,
+          });
+          console.log('✅ OpenAI client created successfully');
+          
+          // Test direct API call
+          console.log('Testing direct OpenAI API call...');
+          const testResponse = await openai.embeddings.create({
+            model: 'text-embedding-3-small',
+            input: 'test',
+            encoding_format: 'float',
+          });
+          console.log('✅ Direct API call successful');
+          console.log('Test embedding length:', testResponse.data[0]?.embedding?.length || 0);
           
           // Generate embedding
           const embedding = await generateEmbedding(item.content);
