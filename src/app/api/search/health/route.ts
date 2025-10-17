@@ -20,10 +20,10 @@ export async function GET() {
   };
 
   // Check Anthropic API key
-  if (process.env.ANTHROPIC_API_KEY) {
+  if (process.env.Claude_My_Secret_Key) {
     health.services.anthropic = true;
   } else {
-    health.errors.push('ANTHROPIC_API_KEY not configured');
+    health.errors.push('Claude_My_Secret_Key not configured');
   }
 
   // Check OpenAI API key
