@@ -5,8 +5,8 @@ import { SearchBar } from "./search/SearchBar";
 export function Hero() {
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      <div className="container mx-auto px-4 py-20">
+    <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50 min-h-screen flex items-center">
+      <div className="container mx-auto px-4 py-20 w-full">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Column - Content */}
@@ -30,17 +30,18 @@ export function Hero() {
               </div>
 
               {/* AI Search Bar */}
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl border-2 border-blue-200">
-                <div className="mb-3">
-                  <h2 className="text-lg font-semibold text-gray-900 flex items-center">
-                    <Brain className="w-5 h-5 mr-2 text-blue-600" />
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-2xl border-2 border-blue-300 hover:border-blue-400 transition-all duration-300">
+                <div className="mb-4">
+                  <h2 className="text-xl font-bold text-gray-900 flex items-center mb-2">
+                    <Brain className="w-6 h-6 mr-3 text-blue-600" />
                     Ask AI About Cursor
                   </h2>
-                  <p className="text-sm text-gray-600">Voice-enabled • Instant answers</p>
+                  <p className="text-sm text-gray-600">Voice-enabled • Instant answers • Powered by Claude 4.5</p>
                 </div>
                 <SearchBar 
                   placeholder="How do I use Tab completion?"
-                  showSuggestions={false}
+                  showSuggestions={true}
+                  className="text-lg"
                 />
               </div>
 
