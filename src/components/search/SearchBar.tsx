@@ -38,6 +38,7 @@ export function SearchBar({
   const [isVoiceActive, setIsVoiceActive] = useState(false);
   const [showSuggestionsList, setShowSuggestionsList] = useState(false);
   const [suggestions, setSuggestions] = useState<Suggestion[]>(POPULAR_SEARCHES);
+  const [hasSearched, setHasSearched] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -53,9 +54,20 @@ export function SearchBar({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Check if there's a query parameter on page load
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const queryParam = urlParams.get('q');
+    if (queryParam) {
+      setQuery(queryParam);
+      setHasSearched(true);
+    }
+  }, []);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
+      setHasSearched(true);
       if (onSearch) {
         onSearch(query);
       } else {
@@ -72,6 +84,7 @@ export function SearchBar({
 
   const handleSuggestionClick = (suggestionText: string) => {
     setQuery(suggestionText);
+    setHasSearched(true);
     setShowSuggestionsList(false);
     if (onSearch) {
       onSearch(suggestionText);
@@ -146,7 +159,7 @@ export function SearchBar({
       </form>
 
       {/* Suggestions Dropdown */}
-      {showSuggestionsList && suggestions.length > 0 && (
+      {showSuggestionsList && suggestions.length > 0 && !hasSearched && (
         <div className="absolute top-full mt-2 w-full bg-white rounded-xl shadow-xl border border-gray-200 z-50 max-h-96 overflow-y-auto">
           <div className="p-2">
             <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide">
@@ -176,7 +189,7 @@ export function SearchBar({
       )}
 
       {/* Quick Tips */}
-      {!query && !showSuggestionsList && (
+      {!query && !showSuggestionsList && !hasSearched && (
         <div className="mt-3 flex flex-wrap gap-2 justify-center">
           <span className="text-sm text-gray-500">Try:</span>
           {POPULAR_SEARCHES.slice(0, 3).map((suggestion, index) => (
