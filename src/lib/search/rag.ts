@@ -1,6 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { searchSimilarContent, SearchResult } from './vector-db';
-import { supabaseAdmin } from './supabase-client';
+import { getSupabaseAdminClient } from './supabase-client';
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
@@ -172,6 +172,7 @@ async function logSearchQuery(
   responseTimeMs: number
 ): Promise<void> {
   try {
+    const supabaseAdmin = getSupabaseAdminClient();
     await supabaseAdmin.from('search_queries').insert({
       query,
       results_count: resultsCount,
@@ -192,6 +193,7 @@ export async function logFeedback(
   rating?: number
 ): Promise<void> {
   try {
+    const supabaseAdmin = getSupabaseAdminClient();
     await supabaseAdmin
       .from('search_queries')
       .update({

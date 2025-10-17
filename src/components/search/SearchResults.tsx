@@ -51,6 +51,13 @@ export function SearchResults() {
 
       if (!response.ok) {
         const errorData = await response.json();
+        
+        // Handle search not configured
+        if (response.status === 503 && errorData.configured === false) {
+          setError('Search feature is not configured yet. Please check back later or contact support.');
+          return;
+        }
+        
         throw new Error(errorData.error || 'Search failed');
       }
 

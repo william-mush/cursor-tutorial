@@ -16,24 +16,19 @@ interface SearchRequest {
 export async function POST(request: NextRequest) {
   try {
     // Check environment variables
-    if (!process.env.ANTHROPIC_API_KEY) {
-      return NextResponse.json(
-        { error: 'AI service not configured. Please add ANTHROPIC_API_KEY to environment variables.' },
-        { status: 500 }
-      );
-    }
+    // Check if search is properly configured
+    const isSearchConfigured = process.env.ANTHROPIC_API_KEY && 
+                              process.env.OPENAI_API_KEY && 
+                              process.env.NEXT_PUBLIC_SUPABASE_URL && 
+                              process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-    if (!process.env.OPENAI_API_KEY) {
+    if (!isSearchConfigured) {
       return NextResponse.json(
-        { error: 'Search service not configured. Please add OPENAI_API_KEY to environment variables.' },
-        { status: 500 }
-      );
-    }
-
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      return NextResponse.json(
-        { error: 'Database not configured. Please add Supabase environment variables.' },
-        { status: 500 }
+        { 
+          error: 'Search feature is not configured. Please add the required API keys and database credentials.',
+          configured: false
+        },
+        { status: 503 }
       );
     }
 
