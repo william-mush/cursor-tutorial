@@ -1,10 +1,17 @@
 import { Redis } from '@upstash/redis';
 
-// Initialize Redis client
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-});
+// Initialize Redis client (with fallback)
+let redis: Redis | null = null;
+
+if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+  redis = new Redis({
+    url: process.env.UPSTASH_REDIS_REST_URL,
+    token: process.env.UPSTASH_REDIS_REST_TOKEN,
+  });
+  console.log('✅ Redis client initialized');
+} else {
+  console.log('⚠️ Redis not configured - using fallback caching');
+}
 
 export { redis };
 
@@ -12,6 +19,10 @@ export { redis };
 export const cache = {
   // Store search result in cache
   async set(key: string, value: any, ttlSeconds: number = 300) {
+    if (!redis) {
+      console.log('⚠️ Redis not available - skipping cache set');
+      return;
+    }
     try {
       await redis.setex(key, ttlSeconds, JSON.stringify(value));
       console.log(`✅ Cached: ${key}`);
@@ -22,6 +33,10 @@ export const cache = {
 
   // Get search result from cache
   async get(key: string) {
+    if (!redis) {
+      console.log('⚠️ Redis not available - cache miss');
+      return null;
+    }
     try {
       const cached = await redis.get(key);
       if (cached) {
