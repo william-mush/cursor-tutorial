@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
     // Try fast search first for common queries
     const startTime = Date.now();
     try {
-      const fastResponse = await fetch(`${process.env.VERCEL_URL ? 'https://' + process.env.VERCEL_URL : 'http://localhost:3000'}/api/fast-search`, {
+      const fastResponse = await fetch(`${process.env.VERCEL_URL ? 'https://' + process.env.VERCEL_URL : 'https://www.cursortutorial.ai'}/api/fast-search`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question }),
