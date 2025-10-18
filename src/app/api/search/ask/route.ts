@@ -64,8 +64,30 @@ export async function POST(request: NextRequest) {
     
     console.log(`[Search] Query from ${clientIp}: "${question}"`);
 
-    // Generate answer using RAG
+    // Try fast search first for common queries
     const startTime = Date.now();
+    try {
+      const fastResponse = await fetch(`${process.env.VERCEL_URL ? 'https://' + process.env.VERCEL_URL : 'http://localhost:3000'}/api/fast-search`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question }),
+      });
+      
+      if (fastResponse.ok) {
+        const fastResult = await fastResponse.json();
+        if (fastResult.success) {
+          console.log(`[Search] Fast response in ${fastResult.data.responseTimeMs}ms`);
+          return NextResponse.json({
+            success: true,
+            data: fastResult.data,
+          });
+        }
+      }
+    } catch (fastError) {
+      console.log('[Search] Fast search not available, using main RAG');
+    }
+
+    // Generate answer using RAG
     const result = await answerQuestion(question, {
       conversationHistory,
       maxSources: 8,
