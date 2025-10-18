@@ -1,18 +1,12 @@
-import { createClient } from '@supabase/supabase-js';
-import { generateEmbedding } from '../src/lib/search/embeddings';
+import { NextRequest, NextResponse } from 'next/server';
+import { getSupabaseAdminClient } from '@/lib/search/supabase-client';
+import { generateEmbedding } from '@/lib/search/embeddings';
 import { randomUUID } from 'crypto';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+export const runtime = 'nodejs';
+export const maxDuration = 300;
 
-const supabase = createClient(supabaseUrl, supabaseKey, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false
-  }
-});
-
-// Comprehensive Cursor tutorial content
+// Comprehensive Cursor tutorial content with UUIDs
 const tutorialContent = [
   {
     id: randomUUID(),
@@ -60,7 +54,7 @@ const tutorialContent = [
     }
   },
   {
-    id: 'ai-chat-cmd-l',
+    id: randomUUID(),
     content: `Cmd+L opens Cursor's AI Chat interface, your personal coding assistant. Ask questions about your code, debug errors, learn new concepts, or get explanations for complex algorithms. The chat understands your entire codebase context and can reference specific files, functions, or variables. Examples: "Why is this function slow?", "How do I implement authentication?", "Explain this React hook", or "What's the best way to structure this component?". It's like having a senior developer available 24/7 for code reviews and mentoring.`,
     metadata: {
       source: 'tutorial',
@@ -75,7 +69,7 @@ const tutorialContent = [
     }
   },
   {
-    id: 'composer-multi-file',
+    id: randomUUID(),
     content: `Composer is Cursor's most powerful feature for building entire features across multiple files. Press Cmd+I to open Composer, then describe what you want to build in natural language. Composer can create new files, modify existing ones, update imports, and ensure everything works together. Examples: "Create a user authentication system", "Add a shopping cart feature", "Implement a REST API", or "Build a React component library". Composer understands your project structure and maintains consistency across all files.`,
     metadata: {
       source: 'tutorial',
@@ -90,7 +84,7 @@ const tutorialContent = [
     }
   },
   {
-    id: 'context-symbols',
+    id: randomUUID(),
     content: `@ symbols provide powerful context to Cursor's AI. Use @Files to reference specific files, @Folders for entire directories, @Codebase to search your whole project, @Docs to query official documentation, and @Web to search the internet. These symbols dramatically improve AI accuracy by giving it the right context. Examples: "@Files: auth.js How do I add JWT validation?" or "@Codebase: Find all API endpoints and add rate limiting". Context symbols make Cursor understand your project like a human developer would.`,
     metadata: {
       source: 'tutorial',
@@ -105,7 +99,7 @@ const tutorialContent = [
     }
   },
   {
-    id: 'cursor-rules',
+    id: randomUUID(),
     content: `Cursor Rules are custom instructions in a .cursorrules file that tell the AI how to generate code for your project. They enforce coding standards, preferred libraries, file organization, and team conventions automatically. Examples: "Always use TypeScript", "Follow React best practices", "Use Tailwind for styling", "Prefer functional components", or "Add JSDoc comments to all functions". Cursor Rules ensure consistency across your entire codebase and make the AI understand your team's specific requirements.`,
     metadata: {
       source: 'tutorial',
@@ -120,7 +114,7 @@ const tutorialContent = [
     }
   },
   {
-    id: 'browser-control',
+    id: randomUUID(),
     content: `Browser Control in Cursor allows you to interact with web applications directly from your editor. You can click buttons, fill forms, navigate pages, and even take screenshots - all while coding. This is perfect for testing your applications, debugging frontend issues, or automating web tasks. Simply describe what you want to do in the browser, and Cursor will execute the actions while you continue coding. It's like having a built-in browser automation tool integrated with your development workflow.`,
     metadata: {
       source: 'tutorial',
@@ -135,7 +129,7 @@ const tutorialContent = [
     }
   },
   {
-    id: 'sandboxed-terminals',
+    id: randomUUID(),
     content: `Sandboxed Terminals in Cursor provide secure, isolated environments for running commands and scripts. Each terminal is completely separate, so you can run different projects, install different dependencies, and test different configurations without conflicts. Perfect for microservices, different Node.js versions, or experimental features. The terminals are integrated with Cursor's AI, so you can ask questions about command output, debug errors, or get suggestions for next steps.`,
     metadata: {
       source: 'tutorial',
@@ -150,7 +144,7 @@ const tutorialContent = [
     }
   },
   {
-    id: 'team-rules',
+    id: randomUUID(),
     content: `Team Rules in Cursor allow organizations to share coding standards and conventions across all team members. Administrators can create organization-wide .cursorrules files that automatically apply to everyone's Cursor installation. This ensures consistency, reduces code review time, and helps onboard new team members quickly. Team Rules can include company-specific patterns, preferred libraries, security requirements, and architectural decisions. It's like having your team's coding culture built into the AI.`,
     metadata: {
       source: 'tutorial',
@@ -165,7 +159,7 @@ const tutorialContent = [
     }
   },
   {
-    id: 'getting-started',
+    id: randomUUID(),
     content: `Getting started with Cursor is easy and takes just 10 minutes. Download from cursor.sh, install for your operating system, and sign up for an account. Start with Tab completion - just type a function name and press Tab. Try Cmd+K on some code - select it and describe a change. Open Cmd+L and ask a question about your code. These three features alone will make you 30-50% more productive immediately. Cursor works with any programming language and integrates seamlessly with your existing VS Code extensions and workflows.`,
     metadata: {
       source: 'tutorial',
@@ -180,7 +174,7 @@ const tutorialContent = [
     }
   },
   {
-    id: 'keyboard-shortcuts',
+    id: randomUUID(),
     content: `Essential Cursor keyboard shortcuts: Tab (accept AI suggestion), Cmd+→ (accept word-by-word), Alt+[ or Alt+] (cycle alternatives), Cmd+K (inline edit), Cmd+L (AI chat), Cmd+I (Composer), Cmd+Shift+L (chat with selection), Cmd+Shift+K (edit with selection). These shortcuts make Cursor incredibly fast to use. You can customize them in Settings > Keyboard Shortcuts. Most developers memorize these within a week and find themselves reaching for them in other editors too.`,
     metadata: {
       source: 'tutorial',
@@ -195,7 +189,7 @@ const tutorialContent = [
     }
   },
   {
-    id: 'vs-code-comparison',
+    id: randomUUID(),
     content: `Cursor vs VS Code: Cursor is built on VS Code but adds AI superpowers. You get all VS Code features plus Tab completion, Cmd+K editing, AI Chat, Composer, and context symbols. Cursor understands your codebase context, while VS Code is just a text editor. Cursor can write entire features, debug complex issues, and explain code - VS Code requires extensions and manual work. Cursor is like VS Code + GitHub Copilot + ChatGPT + a senior developer, all integrated seamlessly.`,
     metadata: {
       source: 'tutorial',
@@ -210,7 +204,7 @@ const tutorialContent = [
     }
   },
   {
-    id: 'github-copilot-comparison',
+    id: randomUUID(),
     content: `Cursor vs GitHub Copilot: Cursor includes everything Copilot does plus much more. Copilot only does Tab completion, while Cursor adds Cmd+K editing, AI Chat, Composer, context symbols, and codebase understanding. Cursor works offline, understands your entire project, and can build complete features. Copilot is just a suggestion engine, while Cursor is a full AI development environment. Cursor's AI is more powerful, context-aware, and integrated with your workflow.`,
     metadata: {
       source: 'tutorial',
@@ -225,7 +219,7 @@ const tutorialContent = [
     }
   },
   {
-    id: 'productivity-tips',
+    id: randomUUID(),
     content: `Cursor productivity tips: Use @ symbols for better context, create .cursorrules files for consistency, combine Tab completion with Cmd+K for rapid development, use Composer for new features, ask Cmd+L for code explanations, leverage Browser Control for testing, and use Team Rules for collaboration. The key is to think of Cursor as a pair programming partner, not just a tool. Describe what you want to build, not how to build it. Let Cursor handle the implementation details while you focus on architecture and logic.`,
     metadata: {
       source: 'tutorial',
@@ -241,57 +235,96 @@ const tutorialContent = [
   }
 ];
 
-async function populateContent() {
-  console.log('🚀 Starting content population...');
-  
+export async function POST(request: NextRequest) {
   try {
+    console.log('🚀 Starting comprehensive content population...');
+    
+    const supabaseAdmin = getSupabaseAdminClient();
+    const results: any[] = [];
+    let successCount = 0;
+    let errorCount = 0;
+
     // Clear existing content
     console.log('🧹 Clearing existing content...');
-    await supabase.from('cursor_content').delete().neq('id', 'dummy');
-    
-    // Populate with new content
-    console.log('📝 Adding tutorial content...');
+    const { error: deleteError } = await supabaseAdmin
+      .from('cursor_content')
+      .delete()
+      .neq('id', 'dummy');
+
+    if (deleteError) {
+      console.error('❌ Error clearing content:', deleteError.message);
+    } else {
+      console.log('✅ Existing content cleared');
+    }
+
+    // Add comprehensive content
+    console.log('📝 Adding comprehensive tutorial content...');
     
     for (const item of tutorialContent) {
-      console.log(`  Adding: ${item.metadata.title}`);
-      
-      // Generate embedding for the content
-      const embedding = await generateEmbedding(item.content);
-      
-      // Insert into database
-      const { error } = await supabase.from('cursor_content').insert({
-        id: item.id,
-        content: item.content,
-        embedding: embedding,
-        metadata: item.metadata,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
-      });
-      
-      if (error) {
-        console.error(`❌ Error adding ${item.metadata.title}:`, error);
-      } else {
+      try {
+        console.log(`  Adding: ${item.metadata.title}`);
+        
+        // Generate embedding
+        const embedding = await generateEmbedding(item.content);
+        
+        // Insert into database
+        const { error } = await supabaseAdmin.from('cursor_content').insert({
+          id: item.id,
+          content: item.content,
+          embedding: embedding,
+          metadata: item.metadata,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        });
+        
+        if (error) {
+          throw error;
+        }
+        
+        successCount++;
+        results.push({ id: item.id, title: item.metadata.title, status: 'success' });
         console.log(`✅ Added: ${item.metadata.title}`);
+        
+      } catch (error: any) {
+        errorCount++;
+        results.push({ id: item.id, title: item.metadata.title, status: 'error', error: error.message });
+        console.error(`❌ Error adding ${item.metadata.title}:`, error.message);
       }
-      
-      // Small delay to avoid rate limits
-      await new Promise(resolve => setTimeout(resolve, 100));
     }
-    
-    console.log('🎉 Content population completed!');
-    
-    // Verify the data
-    const { data: count } = await supabase
+
+    // Verify content
+    const { data: contentInDb, error: verifyError } = await supabaseAdmin
       .from('cursor_content')
-      .select('id', { count: 'exact' });
-    
-    console.log(`📊 Total content items: ${count?.length || 0}`);
-    
-  } catch (error) {
-    console.error('❌ Error populating content:', error);
-    throw error;
+      .select('id, metadata')
+      .not('embedding', 'is', null);
+
+    if (verifyError) {
+      console.error('❌ Error verifying content:', verifyError.message);
+    }
+
+    console.log(`🎉 Content population completed! Success: ${successCount}, Errors: ${errorCount}`);
+
+    return NextResponse.json({
+      success: true,
+      message: 'Comprehensive content population completed!',
+      summary: {
+        totalItems: tutorialContent.length,
+        successCount,
+        errorCount,
+        contentInDatabase: contentInDb?.length || 0
+      },
+      results
+    });
+
+  } catch (error: any) {
+    console.error('❌ Content population error:', error);
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Content population failed',
+        error: error.message
+      },
+      { status: 500 }
+    );
   }
 }
-
-// Run the population
-populateContent().catch(console.error);
