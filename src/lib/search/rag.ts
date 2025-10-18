@@ -1,10 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { searchSimilarContent, SearchResult } from './vector-db';
 import { getSupabaseAdminClient } from './supabase-client';
-
-// Simple in-memory cache for common queries
-const queryCache = new Map<string, { response: RAGResponse; timestamp: number }>();
-const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+import { cache } from '../redis';
 
 const anthropic = new Anthropic({
   apiKey: process.env.Claude_My_Secret_Key,
@@ -36,12 +33,12 @@ export async function answerQuestion(
   const startTime = Date.now();
   const { maxSources = 8, temperature = 0.3, conversationHistory = [] } = options;
 
-  // Check cache first for common queries
-  const cacheKey = question.toLowerCase().trim();
-  const cached = queryCache.get(cacheKey);
-  if (cached && (Date.now() - cached.timestamp) < CACHE_TTL) {
-    console.log('🚀 Cache hit - returning cached response');
-    return { ...cached.response, responseTimeMs: Date.now() - startTime };
+  // Check Redis cache first
+  const cacheKey = cache.generateKey(question);
+  const cached = await cache.get(cacheKey);
+  if (cached) {
+    console.log('🚀 Redis cache hit - returning cached response');
+    return { ...cached, responseTimeMs: Date.now() - startTime };
   }
 
   try {
@@ -110,14 +107,14 @@ Focus on practical, actionable advice.`;
     // Add timeout to prevent very slow responses
     const response = await Promise.race([
       anthropic.messages.create({
-        model: 'claude-3-5-haiku-20241022', // Fast and efficient model
-        max_tokens: 1000, // Further reduced for faster generation
+        model: 'claude-3-5-sonnet-20241022', // Faster and higher quality than Haiku
+        max_tokens: 1000, // Optimized for speed
         temperature: 0.1, // Lower temperature for faster, more deterministic responses
         system: systemPrompt,
         messages,
       }),
       new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Response timeout')), 15000)
+        setTimeout(() => reject(new Error('Response timeout')), 12000) // Reduced timeout since Sonnet is faster
       )
     ]) as any;
 
@@ -157,14 +154,9 @@ Focus on practical, actionable advice.`;
       responseTimeMs,
     };
 
-    // 7. Cache the response for common queries
+    // 7. Cache the response in Redis
     if (searchResults.length > 0) {
-      queryCache.set(cacheKey, { response, timestamp: Date.now() });
-      // Keep cache size reasonable
-      if (queryCache.size > 100) {
-        const oldestKey = queryCache.keys().next().value;
-        queryCache.delete(oldestKey);
-      }
+      await cache.set(cacheKey, response, 300); // Cache for 5 minutes
     }
 
     return response;
