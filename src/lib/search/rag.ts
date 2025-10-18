@@ -45,12 +45,14 @@ export async function answerQuestion(
   }
 
   try {
-    // 1. Search for relevant content
+    // 1. Search for relevant content (parallel with other operations)
     console.log(`🔍 Searching for: "${question}"`);
-    const searchResults = await searchSimilarContent(question, {
-      matchCount: Math.min(maxSources, 5), // Limit to 5 for faster processing
-      matchThreshold: 0.4, // Lower threshold for faster results
+    const searchPromise = searchSimilarContent(question, {
+      matchCount: Math.min(maxSources, 4), // Further reduced for speed
+      matchThreshold: 0.35, // Even lower threshold for faster results
     });
+    
+    const searchResults = await searchPromise;
     console.log(`📊 Found ${searchResults.length} search results`);
 
     if (searchResults.length === 0) {
@@ -105,13 +107,19 @@ Focus on practical, actionable advice.`;
       },
     ];
 
-    const response = await anthropic.messages.create({
-      model: 'claude-3-5-haiku-20241022', // Fast and efficient model
-      max_tokens: 1500, // Reduced for faster generation
-      temperature,
-      system: systemPrompt,
-      messages,
-    });
+    // Add timeout to prevent very slow responses
+    const response = await Promise.race([
+      anthropic.messages.create({
+        model: 'claude-3-5-haiku-20241022', // Fast and efficient model
+        max_tokens: 1000, // Further reduced for faster generation
+        temperature: 0.1, // Lower temperature for faster, more deterministic responses
+        system: systemPrompt,
+        messages,
+      }),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Response timeout')), 15000)
+      )
+    ]) as any;
 
     const answer = response.content[0].type === 'text' 
       ? response.content[0].text 
