@@ -36,7 +36,7 @@ export async function answerQuestion(
     // 1. Search for relevant content
     const searchResults = await searchSimilarContent(question, {
       matchCount: maxSources,
-      matchThreshold: 0.7,
+      matchThreshold: 0.5,
     });
 
     if (searchResults.length === 0) {
