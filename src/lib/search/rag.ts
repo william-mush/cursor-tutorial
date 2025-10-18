@@ -34,12 +34,15 @@ export async function answerQuestion(
 
   try {
     // 1. Search for relevant content
+    console.log(`🔍 Searching for: "${question}"`);
     const searchResults = await searchSimilarContent(question, {
       matchCount: maxSources,
       matchThreshold: 0.5,
     });
+    console.log(`📊 Found ${searchResults.length} search results`);
 
     if (searchResults.length === 0) {
+      console.log('❌ No search results found');
       return {
         answer: "I couldn't find specific information about that in the Cursor documentation. Could you rephrase your question or ask about a different Cursor feature?",
         sources: [],
@@ -51,6 +54,8 @@ export async function answerQuestion(
         responseTimeMs: Date.now() - startTime,
       };
     }
+
+    console.log('✅ Found search results, proceeding with RAG...');
 
     // 2. Build context from search results
     const context = searchResults
