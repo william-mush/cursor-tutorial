@@ -2,6 +2,10 @@ import Anthropic from '@anthropic-ai/sdk';
 import { searchSimilarContent, SearchResult } from './vector-db';
 import { getSupabaseAdminClient } from './supabase-client';
 
+// Simple in-memory cache for common queries
+const queryCache = new Map<string, { response: RAGResponse; timestamp: number }>();
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
 const anthropic = new Anthropic({
   apiKey: process.env.Claude_My_Secret_Key,
 });
@@ -32,12 +36,20 @@ export async function answerQuestion(
   const startTime = Date.now();
   const { maxSources = 8, temperature = 0.3, conversationHistory = [] } = options;
 
+  // Check cache first for common queries
+  const cacheKey = question.toLowerCase().trim();
+  const cached = queryCache.get(cacheKey);
+  if (cached && (Date.now() - cached.timestamp) < CACHE_TTL) {
+    console.log('🚀 Cache hit - returning cached response');
+    return { ...cached.response, responseTimeMs: Date.now() - startTime };
+  }
+
   try {
     // 1. Search for relevant content
     console.log(`🔍 Searching for: "${question}"`);
     const searchResults = await searchSimilarContent(question, {
-      matchCount: maxSources,
-      matchThreshold: 0.5,
+      matchCount: Math.min(maxSources, 5), // Limit to 5 for faster processing
+      matchThreshold: 0.4, // Lower threshold for faster results
     });
     console.log(`📊 Found ${searchResults.length} search results`);
 
@@ -67,52 +79,20 @@ ${result.content}
       .join('\n');
 
     // 3. Generate answer with Claude 3.5 Haiku
-    const systemPrompt = `You are an expert Cursor AI assistant. Your role is to help users learn and master Cursor, the AI-powered code editor.
+    const systemPrompt = `You are a Cursor AI expert. Answer questions about Cursor using this context:
 
-Use the following context from official Cursor documentation and tutorials to answer questions accurately and helpfully.
-
-Context:
 ${context}
 
-## Response Guidelines:
+Format as clean markdown:
+- # Title with relevant emoji
+- ## Main sections with bullet points
+- **Bold** key terms, `code` for shortcuts
+- Include keyboard shortcuts (Cmd+K, Cmd+L, Cmd+I, Tab)
+- Add 💡 Pro Tips for valuable insights
+- Be concise but comprehensive
+- Use active voice and clear language
 
-### Structure & Formatting:
-- Start with a clear, engaging title using # heading
-- Use ## for main sections, ### for subsections
-- Include relevant emojis/icons for visual appeal (🚀, ⚡, 💡, 🎯, etc.)
-- Use bullet points for lists and features
-- Include code blocks with syntax highlighting when relevant
-- Add "Pro Tips" or "Quick Tips" sections with 💡 icon
-
-### Content Quality:
-- Be concise but comprehensive (aim for 3-5 well-structured sections)
-- Lead with the most important information
-- Use active voice and clear, direct language
-- Include specific keyboard shortcuts (Cmd+K, Cmd+L, Cmd+I, Tab, etc.)
-- Reference Cursor version numbers when relevant (e.g., "New in Cursor 1.7.52")
-- Provide actionable steps and practical examples
-
-### Visual Appeal:
-- Use **bold** for key terms and important concepts
-- Use `code formatting` for commands, shortcuts, and technical terms
-- Include relevant emojis to break up text and add personality
-- Create clear visual hierarchy with proper heading levels
-- Use blockquotes (>) for important tips or warnings
-
-### Tone & Style:
-- Be enthusiastic but professional about Cursor's capabilities
-- Write in a helpful, mentoring tone
-- Be honest about limitations when they exist
-- Focus on practical, actionable advice
-- Make complex concepts accessible
-
-### Source Integration:
-- Naturally weave in information from the provided context
-- Don't just list sources - integrate them meaningfully
-- Use phrases like "According to the documentation..." or "The official guide shows..."
-- Reference specific features or capabilities from the sources
-
-Format your response as clean, elegant markdown that's easy to scan and visually appealing.`;
+Focus on practical, actionable advice.`;
 
     const messages: Anthropic.MessageParam[] = [
       ...conversationHistory.map(msg => ({
@@ -126,8 +106,8 @@ Format your response as clean, elegant markdown that's easy to scan and visually
     ];
 
     const response = await anthropic.messages.create({
-      model: 'claude-3-5-haiku-20241022', // Cheapest model that's still excellent
-      max_tokens: 2000,
+      model: 'claude-3-5-haiku-20241022', // Fast and efficient model
+      max_tokens: 1500, // Reduced for faster generation
       temperature,
       system: systemPrompt,
       messages,
@@ -162,12 +142,24 @@ Format your response as clean, elegant markdown that's easy to scan and visually
     const responseTimeMs = Date.now() - startTime;
     await logSearchQuery(question, searchResults.length, responseTimeMs);
 
-    return {
+    const response: RAGResponse = {
       answer,
       sources,
       relatedQuestions,
       responseTimeMs,
     };
+
+    // 7. Cache the response for common queries
+    if (searchResults.length > 0) {
+      queryCache.set(cacheKey, { response, timestamp: Date.now() });
+      // Keep cache size reasonable
+      if (queryCache.size > 100) {
+        const oldestKey = queryCache.keys().next().value;
+        queryCache.delete(oldestKey);
+      }
+    }
+
+    return response;
   } catch (error) {
     console.error('Error in RAG pipeline:', error);
     throw new Error('Failed to generate answer');
