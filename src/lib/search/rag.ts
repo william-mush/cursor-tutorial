@@ -74,17 +74,45 @@ Use the following context from official Cursor documentation and tutorials to an
 Context:
 ${context}
 
-Guidelines:
-- Provide clear, actionable answers with specific steps
-- Include keyboard shortcuts when relevant (e.g., Cmd+K, Cmd+L, Cmd+I)
-- Reference version numbers when discussing features (e.g., "New in Cursor 1.7")
-- Use code examples when helpful
-- Keep answers concise but complete (2-4 paragraphs ideal)
-- If the context doesn't contain the answer, say so honestly
-- Always cite sources by mentioning which documentation/tutorial you're referencing
-- Be enthusiastic about Cursor's capabilities but honest about limitations
+## Response Guidelines:
 
-Answer in markdown format with clear headings and formatting.`;
+### Structure & Formatting:
+- Start with a clear, engaging title using # heading
+- Use ## for main sections, ### for subsections
+- Include relevant emojis/icons for visual appeal (🚀, ⚡, 💡, 🎯, etc.)
+- Use bullet points for lists and features
+- Include code blocks with syntax highlighting when relevant
+- Add "Pro Tips" or "Quick Tips" sections with 💡 icon
+
+### Content Quality:
+- Be concise but comprehensive (aim for 3-5 well-structured sections)
+- Lead with the most important information
+- Use active voice and clear, direct language
+- Include specific keyboard shortcuts (Cmd+K, Cmd+L, Cmd+I, Tab, etc.)
+- Reference Cursor version numbers when relevant (e.g., "New in Cursor 1.7.52")
+- Provide actionable steps and practical examples
+
+### Visual Appeal:
+- Use **bold** for key terms and important concepts
+- Use `code formatting` for commands, shortcuts, and technical terms
+- Include relevant emojis to break up text and add personality
+- Create clear visual hierarchy with proper heading levels
+- Use blockquotes (>) for important tips or warnings
+
+### Tone & Style:
+- Be enthusiastic but professional about Cursor's capabilities
+- Write in a helpful, mentoring tone
+- Be honest about limitations when they exist
+- Focus on practical, actionable advice
+- Make complex concepts accessible
+
+### Source Integration:
+- Naturally weave in information from the provided context
+- Don't just list sources - integrate them meaningfully
+- Use phrases like "According to the documentation..." or "The official guide shows..."
+- Reference specific features or capabilities from the sources
+
+Format your response as clean, elegant markdown that's easy to scan and visually appealing.`;
 
     const messages: Anthropic.MessageParam[] = [
       ...conversationHistory.map(msg => ({
@@ -109,13 +137,23 @@ Answer in markdown format with clear headings and formatting.`;
       ? response.content[0].text 
       : '';
 
-    // 4. Format sources
-    const sources = searchResults.slice(0, 5).map(result => ({
-      title: result.metadata.title,
-      url: result.metadata.url,
-      snippet: result.content.slice(0, 150) + '...',
-      relevance: Math.round(result.similarity * 100) / 100,
-    }));
+    // 4. Format sources with better snippets
+    const sources = searchResults.slice(0, 5).map(result => {
+      // Create a more intelligent snippet that captures the essence
+      const content = result.content;
+      const sentences = content.split(/[.!?]+/).filter(s => s.trim().length > 20);
+      const bestSentence = sentences[0] || content.slice(0, 120);
+      const snippet = bestSentence.length > 120 
+        ? bestSentence.slice(0, 120) + '...'
+        : bestSentence;
+      
+      return {
+        title: result.metadata.title,
+        url: result.metadata.url,
+        snippet: snippet.trim(),
+        relevance: Math.round(result.similarity * 100) / 100,
+      };
+    });
 
     // 5. Generate related questions (simple heuristic for now)
     const relatedQuestions = generateRelatedQuestions(question, searchResults);
@@ -144,27 +182,56 @@ function generateRelatedQuestions(
   results: SearchResult[]
 ): string[] {
   const questions: string[] = [];
+  const questionLower = question.toLowerCase();
   
-  // Extract topics from results
+  // Extract topics and categories from results
   const topics = results.map(r => r.metadata.title);
+  const categories = results.map(r => r.metadata.category).filter(Boolean);
   
-  // Simple heuristics for related questions
-  if (question.toLowerCase().includes('how')) {
-    questions.push(`What are the benefits of ${topics[0]?.toLowerCase() || 'this feature'}?`);
+  // Smart question generation based on content
+  if (questionLower.includes('tab') || questionLower.includes('completion')) {
+    questions.push("What are the main Cursor keyboard shortcuts?");
+    questions.push("How do I use Cmd+K for inline editing?");
   }
   
-  if (question.toLowerCase().includes('what')) {
-    questions.push(`How do I use ${topics[0]?.toLowerCase() || 'this feature'}?`);
+  if (questionLower.includes('cmd+k') || questionLower.includes('inline')) {
+    questions.push("How do I use Tab completion in Cursor?");
+    questions.push("What is Cursor's AI Chat feature?");
   }
-
-  // Add some common follow-ups
-  questions.push(
-    "What are the main Cursor keyboard shortcuts?",
-    "How does Cursor compare to VS Code?",
-    "What's new in the latest Cursor version?"
-  );
-
-  // Return unique questions, max 4
+  
+  if (questionLower.includes('chat') || questionLower.includes('cmd+l')) {
+    questions.push("How do I use Composer for multi-file editing?");
+    questions.push("What are @ symbols in Cursor?");
+  }
+  
+  if (questionLower.includes('composer') || questionLower.includes('multi-file')) {
+    questions.push("How do I use @ symbols for context?");
+    questions.push("What are Cursor Rules?");
+  }
+  
+  if (questionLower.includes('cursor') && (questionLower.includes('what') || questionLower.includes('is'))) {
+    questions.push("How do I get started with Cursor?");
+    questions.push("How does Cursor compare to VS Code?");
+  }
+  
+  // Add context-aware follow-ups based on categories
+  if (categories.includes('features')) {
+    questions.push("What are the main Cursor keyboard shortcuts?");
+  }
+  
+  if (categories.includes('comparisons')) {
+    questions.push("How do I get started with Cursor?");
+  }
+  
+  if (categories.includes('basics')) {
+    questions.push("What are Cursor's advanced features?");
+  }
+  
+  // Add some evergreen questions
+  questions.push("What's new in Cursor 1.7.52?");
+  questions.push("How do I customize Cursor for my workflow?");
+  
+  // Return unique, relevant questions, max 4
   return [...new Set(questions)].slice(0, 4);
 }
 
