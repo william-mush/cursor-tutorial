@@ -33,12 +33,16 @@ export async function answerQuestion(
   const startTime = Date.now();
   const { maxSources = 8, temperature = 0.3, conversationHistory = [] } = options;
 
-  // Check Redis cache first
-  const cacheKey = cache.generateKey(question);
-  const cached = await cache.get(cacheKey);
-  if (cached) {
-    console.log('🚀 Redis cache hit - returning cached response');
-    return { ...cached, responseTimeMs: Date.now() - startTime };
+  // Check Redis cache first (if available)
+  try {
+    const cacheKey = cache.generateKey(question);
+    const cached = await cache.get(cacheKey);
+    if (cached) {
+      console.log('🚀 Redis cache hit - returning cached response');
+      return { ...cached, responseTimeMs: Date.now() - startTime };
+    }
+  } catch (error) {
+    console.log('⚠️ Redis cache check failed, continuing with search:', error);
   }
 
   try {
@@ -154,9 +158,14 @@ Focus on practical, actionable advice.`;
       responseTimeMs,
     };
 
-    // 7. Cache the response in Redis
+    // 7. Cache the response in Redis (if available)
     if (searchResults.length > 0) {
-      await cache.set(cacheKey, response, 300); // Cache for 5 minutes
+      try {
+        const cacheKey = cache.generateKey(question);
+        await cache.set(cacheKey, response, 300); // Cache for 5 minutes
+      } catch (error) {
+        console.log('⚠️ Redis cache set failed:', error);
+      }
     }
 
     return response;
