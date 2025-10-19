@@ -100,7 +100,7 @@ Focus on practical, actionable advice.`;
     // Add timeout to prevent very slow responses
     const claudeResponse = await Promise.race([
       anthropic.messages.create({
-        model: 'claude-3-5-sonnet-20241022', // Faster and higher quality than Haiku
+        model: 'claude-sonnet-4-5-20250929', // Current model
         max_tokens: 1000, // Optimized for speed
         temperature: 0.1, // Lower temperature for faster, more deterministic responses
         system: systemPrompt,
