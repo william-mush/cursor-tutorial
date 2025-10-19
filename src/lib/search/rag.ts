@@ -1,6 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { searchSimilarContent, SearchResult } from './vector-db';
 import { getSupabaseAdminClient } from './supabase-client';
+import { getSearchConfig } from './config';
 
 const anthropic = new Anthropic({
   apiKey: process.env.Claude_My_Secret_Key,
@@ -30,7 +31,8 @@ export async function answerQuestion(
   } = {}
 ): Promise<RAGResponse> {
   const startTime = Date.now();
-  const { maxSources = 8, temperature = 0.3, conversationHistory = [] } = options;
+  const config = getSearchConfig();
+  const { maxSources = config.maxSources, temperature = 0.3, conversationHistory = [] } = options;
 
   // TODO: Add Redis caching when environment variables are set up
 
@@ -38,8 +40,8 @@ export async function answerQuestion(
     // 1. Search for relevant content (parallel with other operations)
     console.log(`🔍 Searching for: "${question}"`);
     const searchPromise = searchSimilarContent(question, {
-      matchCount: Math.min(maxSources, 4), // Further reduced for speed
-      matchThreshold: 0.35, // Even lower threshold for faster results
+      matchCount: Math.min(maxSources, config.maxSources),
+      matchThreshold: config.matchThreshold,
     });
     
     const searchResults = await searchPromise;

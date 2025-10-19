@@ -7,13 +7,17 @@ const openai = new OpenAI({
 /**
  * Generate embeddings for text using OpenAI's text-embedding-3-small model
  * Cost: ~$0.02 per 1M tokens (very cheap!)
+ * 
+ * @param text - The text to embed
+ * @param dimensions - Number of dimensions (1536 for full precision, 512 for speed)
  */
-export async function generateEmbedding(text: string): Promise<number[]> {
+export async function generateEmbedding(text: string, dimensions: number = 1536): Promise<number[]> {
   try {
     const response = await openai.embeddings.create({
       model: 'text-embedding-3-small',
       input: text.slice(0, 8000), // Limit to ~8K chars to stay within token limits
       encoding_format: 'float',
+      dimensions: dimensions, // Configurable dimensions
     });
 
     return response.data[0].embedding;
@@ -26,8 +30,11 @@ export async function generateEmbedding(text: string): Promise<number[]> {
 /**
  * Generate embeddings for multiple texts in batch
  * More efficient for bulk operations
+ * 
+ * @param texts - Array of texts to embed
+ * @param dimensions - Number of dimensions (1536 for full precision, 512 for speed)
  */
-export async function generateEmbeddingsBatch(texts: string[]): Promise<number[][]> {
+export async function generateEmbeddingsBatch(texts: string[], dimensions: number = 1536): Promise<number[][]> {
   try {
     // OpenAI allows up to 2048 inputs per request
     const batchSize = 2048;
@@ -40,6 +47,7 @@ export async function generateEmbeddingsBatch(texts: string[]): Promise<number[]
         model: 'text-embedding-3-small',
         input: batch,
         encoding_format: 'float',
+        dimensions: dimensions, // Configurable dimensions
       });
 
       embeddings.push(...response.data.map(d => d.embedding));
