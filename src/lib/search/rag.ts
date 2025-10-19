@@ -2,6 +2,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { searchSimilarContent, SearchResult } from './vector-db';
 import { getSupabaseAdminClient } from './supabase-client';
 import { getSearchConfig } from './config';
+import { cache } from '../redis';
 
 const anthropic = new Anthropic({
   apiKey: process.env.Claude_My_Secret_Key,
@@ -34,7 +35,17 @@ export async function answerQuestion(
   const config = getSearchConfig();
   const { maxSources = config.maxSources, temperature = 0.3, conversationHistory = [] } = options;
 
-  // TODO: Add Redis caching when environment variables are set up
+  // Check Redis cache first (if available)
+  try {
+    const cacheKey = cache.generateKey(question);
+    const cached = await cache.get(cacheKey);
+    if (cached) {
+      console.log('🚀 Redis cache hit - returning cached response');
+      return { ...cached, responseTimeMs: Date.now() - startTime };
+    }
+  } catch (error) {
+    console.log('⚠️ Redis cache check failed, continuing with search:', error);
+  }
 
   try {
     // 1. Search for relevant content (parallel with other operations)
@@ -149,7 +160,15 @@ Focus on practical, actionable advice.`;
       responseTimeMs,
     };
 
-    // TODO: Add Redis caching when environment variables are set up
+    // Cache the response in Redis (if available)
+    if (searchResults.length > 0) {
+      try {
+        const cacheKey = cache.generateKey(question);
+        await cache.set(cacheKey, response, config.cacheTimeoutSeconds);
+      } catch (error) {
+        console.log('⚠️ Redis cache set failed:', error);
+      }
+    }
 
     return response;
   } catch (error) {
