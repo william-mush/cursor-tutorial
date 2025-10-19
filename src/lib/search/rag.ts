@@ -105,7 +105,7 @@ Focus on practical, actionable advice.`;
     ];
 
     // Add timeout to prevent very slow responses
-    const response = await Promise.race([
+    const claudeResponse = await Promise.race([
       anthropic.messages.create({
         model: 'claude-3-5-sonnet-20241022', // Faster and higher quality than Haiku
         max_tokens: 1000, // Optimized for speed
@@ -118,8 +118,8 @@ Focus on practical, actionable advice.`;
       )
     ]) as any;
 
-    const answer = response.content[0].type === 'text' 
-      ? response.content[0].text 
+    const answer = claudeResponse.content[0].type === 'text' 
+      ? claudeResponse.content[0].text 
       : '';
 
     // 4. Format sources with better snippets
