@@ -2,16 +2,27 @@ import { Redis } from '@upstash/redis';
 
 // Initialize Redis client (with fallback)
 let redis: Redis | null = null;
+let redisWorking = false;
 
 if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
-  redis = new Redis({
-    url: process.env.UPSTASH_REDIS_REST_URL,
-    token: process.env.UPSTASH_REDIS_REST_TOKEN,
-  });
-  console.log('✅ Redis client initialized');
+  try {
+    redis = new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    });
+    console.log('✅ Redis client initialized');
+    redisWorking = true;
+  } catch (error) {
+    console.log('⚠️ Redis client failed to initialize:', error);
+    redis = null;
+    redisWorking = false;
+  }
 } else {
   console.log('⚠️ Redis not configured - using fallback caching');
 }
+
+// In-memory cache fallback
+const memoryCache = new Map<string, { value: any; expires: number }>();
 
 export { redis };
 
@@ -19,36 +30,56 @@ export { redis };
 export const cache = {
   // Store search result in cache
   async set(key: string, value: any, ttlSeconds: number = 300) {
-    if (!redis) {
-      console.log('⚠️ Redis not available - skipping cache set');
-      return;
+    // Try Redis first
+    if (redis && redisWorking) {
+      try {
+        await redis.setex(key, ttlSeconds, JSON.stringify(value));
+        console.log(`✅ Redis cached: ${key}`);
+        return;
+      } catch (error) {
+        console.log('⚠️ Redis set failed, falling back to memory:', error);
+        redisWorking = false; // Mark Redis as not working
+      }
     }
-    try {
-      await redis.setex(key, ttlSeconds, JSON.stringify(value));
-      console.log(`✅ Cached: ${key}`);
-    } catch (error) {
-      console.error('❌ Cache set error:', error);
-    }
+    
+    // Fallback to memory cache
+    const expires = Date.now() + (ttlSeconds * 1000);
+    memoryCache.set(key, { value, expires });
+    console.log(`✅ Memory cached: ${key}`);
   },
 
   // Get search result from cache
   async get(key: string) {
-    if (!redis) {
-      console.log('⚠️ Redis not available - cache miss');
-      return null;
-    }
-    try {
-      const cached = await redis.get(key);
-      if (cached) {
-        console.log(`🚀 Cache hit: ${key}`);
-        return JSON.parse(cached as string);
+    // Try Redis first
+    if (redis && redisWorking) {
+      try {
+        const cached = await redis.get(key);
+        if (cached) {
+          console.log(`🚀 Redis cache hit: ${key}`);
+          return JSON.parse(cached as string);
+        }
+        console.log(`❌ Redis cache miss: ${key}`);
+        return null;
+      } catch (error) {
+        console.log('⚠️ Redis get failed, falling back to memory:', error);
+        redisWorking = false; // Mark Redis as not working
       }
-      console.log(`❌ Cache miss: ${key}`);
-      return null;
-    } catch (error) {
-      console.error('❌ Cache get error:', error);
-      return null;
     }
+    
+    // Fallback to memory cache
+    const cached = memoryCache.get(key);
+    if (cached && cached.expires > Date.now()) {
+      console.log(`🚀 Memory cache hit: ${key}`);
+      return cached.value;
+    }
+    
+    // Clean up expired entries
+    if (cached) {
+      memoryCache.delete(key);
+    }
+    
+    console.log(`❌ Memory cache miss: ${key}`);
+    return null;
   },
 
   // Generate cache key for search queries
@@ -58,11 +89,28 @@ export const cache = {
 
   // Clear cache (useful for testing)
   async clear() {
-    try {
-      await redis.flushall();
-      console.log('🧹 Cache cleared');
-    } catch (error) {
-      console.error('❌ Cache clear error:', error);
+    // Clear Redis
+    if (redis && redisWorking) {
+      try {
+        await redis.flushall();
+        console.log('🧹 Redis cache cleared');
+      } catch (error) {
+        console.log('⚠️ Redis clear failed:', error);
+        redisWorking = false;
+      }
     }
+    
+    // Clear memory cache
+    memoryCache.clear();
+    console.log('🧹 Memory cache cleared');
+  },
+
+  // Get cache status
+  getStatus() {
+    return {
+      redisWorking,
+      memoryCacheSize: memoryCache.size,
+      redisConfigured: !!redis
+    };
   }
 };
