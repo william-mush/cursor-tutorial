@@ -140,8 +140,8 @@ Focus on practical, actionable advice.`;
       
       // Fix URLs that don't exist - make them point to the main tutorial page
       let url = result.metadata.url;
-      if (url && !url.startsWith('http') && !url.startsWith('/search')) {
-        // If it's a relative URL that doesn't exist, point to the main tutorial
+      if (url && url.includes('/tutorial/') && !url.includes('/search')) {
+        // If it's a tutorial URL that doesn't exist, point to the main tutorial
         url = '/tutorial';
       } else if (!url) {
         // If no URL, point to the main tutorial
