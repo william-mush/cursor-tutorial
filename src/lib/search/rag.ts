@@ -138,9 +138,19 @@ Focus on practical, actionable advice.`;
         ? bestSentence.slice(0, 120) + '...'
         : bestSentence;
       
+      // Fix URLs that don't exist - make them point to the main tutorial page
+      let url = result.metadata.url;
+      if (url && !url.startsWith('http') && !url.startsWith('/search')) {
+        // If it's a relative URL that doesn't exist, point to the main tutorial
+        url = '/tutorial';
+      } else if (!url) {
+        // If no URL, point to the main tutorial
+        url = '/tutorial';
+      }
+      
       return {
         title: result.metadata.title,
-        url: result.metadata.url,
+        url: url,
         snippet: snippet.trim(),
         relevance: Math.round(result.similarity * 100) / 100,
       };

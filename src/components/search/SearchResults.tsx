@@ -224,6 +224,8 @@ export function SearchResults() {
               <a
                 key={index}
                 href={source.url}
+                target={source.url.startsWith('http') ? '_blank' : '_self'}
+                rel={source.url.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="block p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors group"
               >
                 <div className="flex items-start justify-between">
@@ -233,6 +235,9 @@ export function SearchResults() {
                       <ExternalLink className="w-4 h-4 ml-2 text-gray-400 group-hover:text-blue-600" />
                     </div>
                     <p className="text-sm text-gray-600 mt-1">{source.snippet}</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      {source.url === '/tutorial' ? 'Learn more in our tutorials' : source.url}
+                    </p>
                   </div>
                   <div className="ml-4 px-2 py-1 bg-blue-100 text-blue-700 text-xs font-semibold rounded">
                     {Math.round(source.relevance * 100)}% match
