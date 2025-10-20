@@ -109,7 +109,6 @@ export function SearchResults() {
       <div className="bg-white rounded-xl p-12 shadow-lg text-center">
         <Loader2 className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
         <p className="text-gray-600 text-lg">Searching Cursor documentation...</p>
-        <p className="text-gray-400 text-sm mt-2">This usually takes 1-3 seconds</p>
       </div>
     );
   }
