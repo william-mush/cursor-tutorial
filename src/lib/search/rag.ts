@@ -113,14 +113,14 @@ Focus on practical, actionable advice.`;
     // Add timeout to prevent very slow responses
     const claudeResponse = await Promise.race([
       anthropic.messages.create({
-        model: 'claude-sonnet-4-5-20250929', // Current model
+        model: 'claude-3-5-haiku-20241022', // Fast & cheap model
         max_tokens: 1000, // Optimized for speed
         temperature: 0.1, // Lower temperature for faster, more deterministic responses
         system: systemPrompt,
         messages,
       }),
       new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Response timeout')), 12000) // Reduced timeout since Sonnet is faster
+        setTimeout(() => reject(new Error('Response timeout')), 8000) // Reduced timeout since Haiku is much faster
       )
     ]) as any;
 

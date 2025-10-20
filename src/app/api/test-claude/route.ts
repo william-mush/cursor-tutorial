@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
     console.log('Testing Claude API...');
     
     const response = await anthropic.messages.create({
-      model: 'claude-sonnet-4-5-20250929',
+      model: 'claude-3-5-haiku-20241022',
       max_tokens: 100,
       temperature: 0.1,
       messages: [
