@@ -155,7 +155,7 @@ export function SearchResults() {
             <div>
               <div className="font-semibold text-gray-900">Cursor AI Assistant</div>
               <div className="text-xs text-gray-500">
-                Powered by Claude 3.5 • {(result.responseTimeMs / 1000).toFixed(1)}s
+                Powered by Claude Haiku • {(result.responseTimeMs / 1000).toFixed(1)}s
               </div>
             </div>
           </div>

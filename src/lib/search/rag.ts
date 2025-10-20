@@ -83,7 +83,7 @@ ${result.content}
 `)
       .join('\n');
 
-    // 3. Generate answer with Claude 3.5 Haiku
+    // 3. Generate answer with Claude Haiku
     const systemPrompt = `You are a Cursor AI expert. Answer questions about Cursor using this context:
 
 ${context}
