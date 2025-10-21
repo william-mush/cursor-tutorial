@@ -16,7 +16,7 @@ export function Hero() {
       <div className="relative container mx-auto px-6 py-16 lg:py-24">
         <div className="max-w-7xl mx-auto">
           {/* Top section with badge and title */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-12">
             <div className="inline-flex items-center px-6 py-3 bg-blue-100 text-blue-800 rounded-full text-sm font-medium mb-8 shadow-lg">
               <Zap className="w-5 h-5 mr-3" />
               AI-Powered Development
@@ -31,7 +31,7 @@ export function Hero() {
               Development
             </h1>
             
-            <p className="text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-4xl mx-auto mb-12">
+            <p className="text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-4xl mx-auto mb-8">
               Complete Cursor 1.7.52 tutorial with Browser Control, Hooks, Team Rules, 
               <br />
               Sandboxed Terminals, and latest AI features.
@@ -40,44 +40,48 @@ export function Hero() {
                 Learn next-generation AI-assisted development with comprehensive guides and real-world examples.
               </span>
             </p>
+          </div>
 
-            <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-              <Link
-                href="/tutorial/basics"
-                className="inline-flex items-center px-10 py-5 bg-blue-600 text-white rounded-xl font-semibold text-lg hover:bg-blue-700 transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
-              >
-                Start Learning
-                <ArrowRight className="w-6 h-6 ml-3" />
-              </Link>
-              <Link
-                href="/search"
-                className="inline-flex items-center px-10 py-5 bg-white text-gray-700 rounded-xl font-semibold text-lg border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-              >
-                Explore Features
-                <Brain className="w-6 h-6 ml-3 text-blue-600" />
-              </Link>
+          {/* AI Search Bar - Front and Center */}
+          <div className="max-w-4xl mx-auto mb-16">
+            <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-10 shadow-2xl border border-blue-200 hover:border-blue-300 transition-all duration-300">
+              <div className="text-center mb-6">
+                <h2 className="text-3xl font-bold text-gray-900 flex items-center justify-center mb-3">
+                  <Brain className="w-8 h-8 mr-4 text-blue-600" />
+                  Ask AI About Cursor
+                </h2>
+                <p className="text-gray-600 text-lg">Voice-enabled • Instant answers • Powered by Claude 4.5</p>
+              </div>
+              <SearchBar 
+                placeholder="How do I use Tab completion?"
+                showSuggestions={true}
+                className="text-xl"
+              />
             </div>
+          </div>
+
+          {/* Call to Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
+            <Link
+              href="/tutorial/basics"
+              className="inline-flex items-center px-10 py-5 bg-blue-600 text-white rounded-xl font-semibold text-lg hover:bg-blue-700 transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+            >
+              Start Learning
+              <ArrowRight className="w-6 h-6 ml-3" />
+            </Link>
+            <Link
+              href="/search"
+              className="inline-flex items-center px-10 py-5 bg-white text-gray-700 rounded-xl font-semibold text-lg border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            >
+              Explore Features
+              <Brain className="w-6 h-6 ml-3 text-blue-600" />
+            </Link>
           </div>
 
           {/* Main content grid */}
           <div className="grid lg:grid-cols-2 gap-16 items-start">
-            {/* Left Column - AI Search */}
+            {/* Left Column - Feature highlights */}
             <div className="space-y-8">
-              <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-10 shadow-2xl border border-blue-200 hover:border-blue-300 transition-all duration-300">
-                <div className="mb-6">
-                  <h2 className="text-2xl font-bold text-gray-900 flex items-center mb-3">
-                    <Brain className="w-7 h-7 mr-4 text-blue-600" />
-                    Ask AI About Cursor
-                  </h2>
-                  <p className="text-gray-600 text-lg">Voice-enabled • Instant answers • Powered by Claude 4.5</p>
-                </div>
-                <SearchBar 
-                  placeholder="How do I use Tab completion?"
-                  showSuggestions={true}
-                  className="text-lg"
-                />
-              </div>
-
               {/* Feature highlights */}
               <div className="grid grid-cols-2 gap-6">
                 <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
@@ -93,6 +97,20 @@ export function Hero() {
                   </div>
                   <h3 className="font-semibold text-gray-900 mb-2">Tab Completion</h3>
                   <p className="text-sm text-gray-600">Smart autocomplete for faster coding</p>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+                  <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4">
+                    <Brain className="w-6 h-6 text-green-600" />
+                  </div>
+                  <h3 className="font-semibold text-gray-900 mb-2">AI Chat</h3>
+                  <p className="text-sm text-gray-600">Ask questions and get instant help</p>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300">
+                  <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-4">
+                    <ArrowRight className="w-6 h-6 text-orange-600" />
+                  </div>
+                  <h3 className="font-semibold text-gray-900 mb-2">Quick Actions</h3>
+                  <p className="text-sm text-gray-600">Streamlined development workflow</p>
                 </div>
               </div>
             </div>
