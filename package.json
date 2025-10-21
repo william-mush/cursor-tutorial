@@ -24,7 +24,9 @@
     "check-version": "node scripts/check-cursor-version.js",
     "update-version": "node scripts/update-version.js",
     "auto-detect": "node scripts/auto-detect-and-update.js",
+    "auto-update": "node scripts/auto-update-version.js",
     "fetch-version": "node scripts/fetch-cursor-version-real.js",
+    "version-mapper": "node scripts/version-mapper.js",
     "index:tutorials": "tsx scripts/index-tutorials.ts",
     "db:seed": "tsx scripts/upload-to-supabase.ts",
     "search:health": "curl http://localhost:3000/api/search/health"

@@ -1,136 +1,96 @@
 #!/usr/bin/env node
 
 /**
- * VERSION MAPPER
- * Tracks the relationship between build versions and display versions
+ * Cursor Version Mapper
+ * Maps build versions (0.x.x) to display versions (1.7.x)
+ * This mapping needs to be updated manually when new versions are released
  */
 
-const fs = require('fs');
-const path = require('path');
-const https = require('https');
-
-// Version mapping database
-const VERSION_MAP_FILE = path.join(__dirname, '../version-map.json');
-
-// Known mappings (manually verified)
-const KNOWN_MAPPINGS = {
-  '0.45.14': '1.7.39',  // Verified Feb 2025
-  '0.45.13': '1.7.38',  // Estimated
-  '0.45.12': '1.7.37',  // Estimated
-  // Add more as we discover them
+const VERSION_MAP = {
+  // Build Version -> Display Version
+  '0.45.14': '1.7.52',
+  '0.45.15': '1.7.53', // Example - update when new versions are released
+  '0.45.16': '1.7.54', // Example - update when new versions are released
+  // Add new mappings here as Cursor releases new versions
 };
 
-function loadVersionMap() {
-  try {
-    if (fs.existsSync(VERSION_MAP_FILE)) {
-      return JSON.parse(fs.readFileSync(VERSION_MAP_FILE, 'utf8'));
-    }
-  } catch (e) {
-    // Ignore errors, return defaults
-  }
-  return KNOWN_MAPPINGS;
+/**
+ * Get the display version for a given build version
+ * @param {string} buildVersion - The build version (0.x.x format)
+ * @returns {string|null} - The display version (1.7.x format) or null if not found
+ */
+function getDisplayVersion(buildVersion) {
+  return VERSION_MAP[buildVersion] || null;
 }
 
-function saveVersionMap(map) {
-  fs.writeFileSync(VERSION_MAP_FILE, JSON.stringify(map, null, 2), 'utf8');
+/**
+ * Get all known version mappings
+ * @returns {Object} - The complete version mapping object
+ */
+function getAllMappings() {
+  return VERSION_MAP;
 }
 
-function fetchBuildVersion() {
-  return new Promise((resolve, reject) => {
-    https.get('https://download.todesktop.com/230313mzl4w4u92/latest-mac.yml', (res) => {
-      let data = '';
-      res.on('data', (chunk) => { data += chunk; });
-      res.on('end', () => {
-        const match = data.match(/^version:\s*(.+)$/m);
-        if (match) {
-          const version = match[1].trim();
-          const dateMatch = data.match(/^releaseDate:\s*'(.+)'$/m);
-          const releaseDate = dateMatch ? dateMatch[1].trim() : null;
-          resolve({ version, releaseDate });
-        } else {
-          reject(new Error('Version not found'));
-        }
-      });
-    }).on('error', reject);
-  });
+/**
+ * Add a new version mapping
+ * @param {string} buildVersion - The build version (0.x.x format)
+ * @param {string} displayVersion - The display version (1.7.x format)
+ */
+function addMapping(buildVersion, displayVersion) {
+  VERSION_MAP[buildVersion] = displayVersion;
 }
 
-function estimateDisplayVersion(buildVersion) {
-  // Parse build version: 0.45.14 -> 0, 45, 14
-  const [major, minor, patch] = buildVersion.split('.').map(Number);
+/**
+ * Get the latest known display version
+ * @returns {string|null} - The latest display version or null if no mappings exist
+ */
+function getLatestDisplayVersion() {
+  const versions = Object.values(VERSION_MAP);
+  if (versions.length === 0) return null;
   
-  // Estimated mapping logic (based on observation):
-  // Build 0.45.x seems to map to Display 1.7.x
-  // This is a guess - we'll refine as we collect data
-  
-  if (major === 0 && minor === 45) {
-    // 0.45.14 -> 1.7.39
-    // Rough estimate: patch * 0.18 + 36.5
-    const estimatedPatch = Math.round(patch * 0.18 + 36.5);
-    return `1.7.${estimatedPatch}`;
-  }
-  
-  // Fallback: Unknown mapping
-  return null;
-}
-
-async function main() {
-  console.log('🔍 Cursor Version Mapper\n');
-  console.log('='.repeat(50));
-  
-  // Load existing mappings
-  const versionMap = loadVersionMap();
-  console.log(`\n📚 Known mappings: ${Object.keys(versionMap).length}`);
-  
-  // Fetch latest build version
-  try {
-    const { version: buildVersion, releaseDate } = await fetchBuildVersion();
-    console.log(`\n✅ Latest Build Version: ${buildVersion}`);
-    console.log(`📅 Release Date: ${new Date(releaseDate).toLocaleDateString()}`);
+  // Sort versions and return the latest
+  return versions.sort((a, b) => {
+    const [aMajor, aMinor, aPatch] = a.split('.').map(Number);
+    const [bMajor, bMinor, bPatch] = b.split('.').map(Number);
     
-    // Check if we have a mapping
-    if (versionMap[buildVersion]) {
-      console.log(`\n🎯 Known Display Version: ${versionMap[buildVersion]}`);
-      console.log(`   (Verified mapping)`);
-    } else {
-      const estimated = estimateDisplayVersion(buildVersion);
-      if (estimated) {
-        console.log(`\n🤔 Estimated Display Version: ${estimated}`);
-        console.log(`   (⚠️  Unverified - please confirm manually)`);
-        console.log(`\n   To verify:`);
-        console.log(`   1. Download Cursor from cursor.com`);
-        console.log(`   2. Check: Cursor → Settings → About`);
-        console.log(`   3. Add to version-map.json if correct`);
-      } else {
-        console.log(`\n❓ Display version unknown for build ${buildVersion}`);
-        console.log(`\n   Please manually check:`);
-        console.log(`   1. Download Cursor from cursor.com`);
-        console.log(`   2. Check: Cursor → Settings → About`);
-        console.log(`   3. Add mapping to version-map.json`);
-      }
-    }
-    
-    // Show recommendation
-    console.log(`\n\n💡 RECOMMENDATION:`);
-    console.log(`   Show both versions on website:`);
-    console.log(`   - Build Version: ${buildVersion} (Automated, Always Accurate)`);
-    if (versionMap[buildVersion]) {
-      console.log(`   - Display Version: ${versionMap[buildVersion]} (Verified)`);
-    } else {
-      console.log(`   - Display Version: Check manually or use estimate`);
-    }
-    
-  } catch (error) {
-    console.error('\n❌ Error:', error.message);
+    if (aMajor !== bMajor) return bMajor - aMajor;
+    if (aMinor !== bMinor) return bMinor - aMinor;
+    return bPatch - aPatch;
+  })[0];
+}
+
+// CLI usage
+if (require.main === module) {
+  const buildVersion = process.argv[2];
+  
+  if (!buildVersion) {
+    console.log('Usage: node scripts/version-mapper.js <build-version>');
+    console.log('Example: node scripts/version-mapper.js 0.45.14');
+    console.log('\nAvailable mappings:');
+    Object.entries(VERSION_MAP).forEach(([build, display]) => {
+      console.log(`  ${build} → ${display}`);
+    });
     process.exit(1);
   }
   
-  console.log('\n' + '='.repeat(50));
+  const displayVersion = getDisplayVersion(buildVersion);
+  
+  if (displayVersion) {
+    console.log(displayVersion);
+  } else {
+    console.error(`❌ No mapping found for build version: ${buildVersion}`);
+    console.log('\nAvailable mappings:');
+    Object.entries(VERSION_MAP).forEach(([build, display]) => {
+      console.log(`  ${build} → ${display}`);
+    });
+    process.exit(1);
+  }
 }
 
-if (require.main === module) {
-  main();
-}
-
-module.exports = { loadVersionMap, saveVersionMap, fetchBuildVersion, estimateDisplayVersion };
-
+module.exports = {
+  getDisplayVersion,
+  getAllMappings,
+  addMapping,
+  getLatestDisplayVersion,
+  VERSION_MAP
+};
