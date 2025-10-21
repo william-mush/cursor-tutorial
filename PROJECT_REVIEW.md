@@ -26,7 +26,7 @@
 - **Auto-deploy:** Enabled on main branch
 
 ### 3. ✅ Content - Current & Up-to-Date
-- **Cursor Version:** 1.7.52 (latest)
+- **Cursor Version:** 0.45.14 (latest)
 - **Claude Version:** 4.5 Sonnet (latest)
 - **Last Content Update:** October 8, 2025
 
@@ -340,7 +340,7 @@ Check in Vercel dashboard that these are set:
 All requested features have been implemented:
 1. ✅ GitHub repository created and updated
 2. ✅ Vercel deployment configured
-3. ✅ Content updated to latest Cursor (1.7.52) and Claude (4.5 Sonnet) versions
+3. ✅ Content updated to latest Cursor (0.45.14) and Claude (4.5 Sonnet) versions
 4. ✅ Comprehensive, intuitive tutorials created
 5. ✅ SEO "fully awesome" - sitemap, robots.txt, structured data, metadata
 6. ✅ Email signup with Google login integrated

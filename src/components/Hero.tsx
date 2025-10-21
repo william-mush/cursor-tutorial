@@ -32,7 +32,7 @@ export function Hero() {
             </h1>
             
             <p className="text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-4xl mx-auto mb-8">
-              Complete Cursor 1.7.52 tutorial with Browser Control, Hooks, Team Rules, 
+              Complete Cursor 1.7.52 tutorial with Browser Control, Hooks, Team Rules,
               <br />
               Sandboxed Terminals, and latest AI features.
               <br />
