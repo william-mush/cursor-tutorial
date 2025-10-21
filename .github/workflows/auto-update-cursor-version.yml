@@ -1,4 +1,4 @@
-name: Auto-Update Cursor Version
+name: Fully Automated Cursor Version Update
 
 on:
   schedule:
@@ -12,7 +12,7 @@ on:
       - '.github/workflows/auto-update-cursor-version.yml'
 
 jobs:
-  check-and-update:
+  fully-automated-update:
     runs-on: ubuntu-latest
     
     steps:
@@ -31,103 +31,17 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Check for new Cursor version
-      id: check-version
+    - name: Run fully automated update
+      env:
+        CI: true
+        GITHUB_ACTIONS: true
       run: |
-        echo "🔍 Checking for latest Cursor version..."
-        
-        # Fetch latest version from ToDesktop
-        LATEST_BUILD_VERSION=$(node scripts/fetch-cursor-version-real.js 2>/dev/null | grep "Latest Cursor build version:" | cut -d' ' -f5 || echo "")
-        
-        # Get current website version
-        CURRENT_VERSION=$(grep -o 'Cursor [0-9]\+\.[0-9]\+\.[0-9]\+' src/components/Hero.tsx | head -1 | cut -d' ' -f2 || echo "")
-        
-        echo "Current website version: $CURRENT_VERSION"
-        echo "Latest build version: $LATEST_BUILD_VERSION"
-        
-        # For now, we'll use a manual mapping since build version != display version
-        # This would need to be updated manually when new versions are released
-        case "$LATEST_BUILD_VERSION" in
-          "0.45.14")
-            DISPLAY_VERSION="1.7.52"
-            ;;
-          "0.45.15")
-            DISPLAY_VERSION="1.7.53"
-            ;;
-          "0.45.16")
-            DISPLAY_VERSION="1.7.54"
-            ;;
-          *)
-            echo "No mapping found for build version $LATEST_BUILD_VERSION"
-            echo "DISPLAY_VERSION=" >> $GITHUB_OUTPUT
-            echo "VERSION_CHANGED=false" >> $GITHUB_OUTPUT
-            exit 0
-            ;;
-        esac
-        
-        echo "Mapped display version: $DISPLAY_VERSION"
-        
-        if [ "$CURRENT_VERSION" != "$DISPLAY_VERSION" ]; then
-          echo "Version update needed: $CURRENT_VERSION → $DISPLAY_VERSION"
-          echo "DISPLAY_VERSION=$DISPLAY_VERSION" >> $GITHUB_OUTPUT
-          echo "VERSION_CHANGED=true" >> $GITHUB_OUTPUT
-        else
-          echo "Version is up to date"
-          echo "DISPLAY_VERSION=$DISPLAY_VERSION" >> $GITHUB_OUTPUT
-          echo "VERSION_CHANGED=false" >> $GITHUB_OUTPUT
-        fi
-
-    - name: Update version if needed
-      if: steps.check-version.outputs.VERSION_CHANGED == 'true'
-      run: |
-        echo "🚀 Updating to Cursor ${{ steps.check-version.outputs.DISPLAY_VERSION }}"
-        npm run update-version ${{ steps.check-version.outputs.DISPLAY_VERSION }}
-
-    - name: Commit and push changes
-      if: steps.check-version.outputs.VERSION_CHANGED == 'true'
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add -A
-        git commit -m "Auto-update Cursor version to ${{ steps.check-version.outputs.DISPLAY_VERSION }}"
-        git push
-
-    - name: Create issue for manual mapping
-      if: steps.check-version.outputs.VERSION_CHANGED == 'false' && steps.check-version.outputs.DISPLAY_VERSION == ''
-      uses: actions/github-script@v7
-      with:
-        script: |
-          const { data: issues } = await github.rest.issues.listForRepo({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            state: 'open',
-            labels: 'version-mapping'
-          });
-          
-          if (issues.length === 0) {
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: `New Cursor version detected: ${process.env.LATEST_BUILD_VERSION}`,
-              body: `A new Cursor build version has been detected: **${process.env.LATEST_BUILD_VERSION}**
-
-              Please update the version mapping in \`.github/workflows/auto-update-cursor-version.yml\` to include the correct display version.
-
-              **Steps:**
-              1. Check Cursor → About to get the display version
-              2. Add a new case in the switch statement
-              3. Close this issue
-
-              **Current build version:** ${process.env.LATEST_BUILD_VERSION}
-              **Expected display version:** (check Cursor app)`,
-              labels: ['version-mapping', 'automation']
-            });
-          }
+        echo "🚀 Running fully automated Cursor version update..."
+        node scripts/fully-automated-update.js
 
     - name: Summary
       run: |
-        echo "## 📊 Version Check Summary" >> $GITHUB_STEP_SUMMARY
-        echo "- **Current version:** ${{ steps.check-version.outputs.CURRENT_VERSION }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Latest build version:** ${{ steps.check-version.outputs.LATEST_BUILD_VERSION }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Display version:** ${{ steps.check-version.outputs.DISPLAY_VERSION }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Update needed:** ${{ steps.check-version.outputs.VERSION_CHANGED }}" >> $GITHUB_STEP_SUMMARY
+        echo "## 🤖 Fully Automated Update Complete" >> $GITHUB_STEP_SUMMARY
+        echo "- **Status:** Automated version detection and update completed" >> $GITHUB_STEP_SUMMARY
+        echo "- **No manual steps required**" >> $GITHUB_STEP_SUMMARY
+        echo "- **Check the logs above for details**" >> $GITHUB_STEP_SUMMARY
