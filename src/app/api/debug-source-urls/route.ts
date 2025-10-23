@@ -16,7 +16,7 @@ export async function GET() {
     }
 
     // Extract URL information
-    const urlAnalysis = content?.map(item => ({
+    const urlAnalysis = content?.map((item: any) => ({
       id: item.id,
       title: item.title,
       url: item.metadata?.url || 'No URL',

@@ -18,8 +18,8 @@ export async function GET() {
         redis: 'unknown',
         openai: 'unknown',
         anthropic: 'unknown'
-      },
-      details: {}
+      } as Record<string, string>,
+      details: {} as Record<string, string>
     };
 
     // Check database connection

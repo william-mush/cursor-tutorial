@@ -93,7 +93,7 @@ export async function GET() {
       
       let parsedResult = null;
       try {
-        parsedResult = getResult ? JSON.parse(getResult) : null;
+        parsedResult = getResult ? JSON.parse(getResult as string) : null;
       } catch (parseError) {
         console.error('JSON parse error:', parseError);
       }
