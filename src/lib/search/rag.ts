@@ -200,12 +200,20 @@ Focus on practical, actionable advice.`;
     // Provide more specific error messages
     if (error.message?.includes('timeout')) {
       throw new Error('The search is taking too long. Please try a simpler question.');
-    } else if (error.message?.includes('API key')) {
+    } else if (error.message?.includes('API key') || error.message?.includes('OPENAI_API_KEY')) {
       throw new Error('AI service is temporarily unavailable. Please try again later.');
-    } else if (error.message?.includes('database')) {
+    } else if (error.message?.includes('database') || error.message?.includes('Supabase')) {
       throw new Error('Search database is temporarily unavailable. Please try again later.');
+    } else if (error.message?.includes('Claude') || error.message?.includes('Claude_My_Secret_Key')) {
+      throw new Error('AI service is temporarily unavailable. Please try again later.');
     } else {
-      throw new Error('Failed to generate answer. Please try again.');
+      // Log the actual error for debugging
+      console.error('RAG Error Details:', {
+        message: error.message,
+        stack: error.stack,
+        name: error.name
+      });
+      throw new Error(`Failed to generate answer: ${error.message || 'Unknown error'}. Please try again.`);
     }
   }
 }
@@ -469,10 +477,32 @@ Focus on practical, actionable advice.`;
       responseTimeMs,
     };
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error in streaming RAG pipeline:', error);
+    
+    // Provide more specific error messages
+    let errorMessage = "I'm sorry, I encountered an error while processing your question. Please try again.";
+    
+    if (error.message?.includes('timeout')) {
+      errorMessage = "The search is taking too long. Please try a simpler question.";
+    } else if (error.message?.includes('API key') || error.message?.includes('OPENAI_API_KEY')) {
+      errorMessage = "AI service is temporarily unavailable. Please try again later.";
+    } else if (error.message?.includes('database') || error.message?.includes('Supabase')) {
+      errorMessage = "Search database is temporarily unavailable. Please try again later.";
+    } else if (error.message?.includes('Claude') || error.message?.includes('Claude_My_Secret_Key')) {
+      errorMessage = "AI service is temporarily unavailable. Please try again later.";
+    } else {
+      // Log the actual error for debugging
+      console.error('Streaming RAG Error Details:', {
+        message: error.message,
+        stack: error.stack,
+        name: error.name
+      });
+      errorMessage = `Failed to generate answer: ${error.message || 'Unknown error'}. Please try again.`;
+    }
+    
     yield {
-      answer: "I'm sorry, I encountered an error while processing your question. Please try again.",
+      answer: errorMessage,
       isComplete: true,
       sources: [],
       relatedQuestions: [],
