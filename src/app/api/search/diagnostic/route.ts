@@ -69,7 +69,7 @@ export async function GET() {
         try {
           const { data: searchTest, error: searchError } = await supabaseAdmin
             .rpc('search_cursor_content', {
-              query_embedding: new Array(512).fill(0),
+              query_embedding: new Array(1536).fill(0),
               match_threshold: 0.5,
               match_count: 1
             });
@@ -90,8 +90,8 @@ export async function GET() {
 
     // Test embedding generation
     try {
-      const testEmbedding = await generateEmbedding('test query', 512);
-      if (testEmbedding && testEmbedding.length === 512) {
+      const testEmbedding = await generateEmbedding('test query', 1536);
+      if (testEmbedding && testEmbedding.length === 1536) {
         diagnostics.embeddings.canGenerate = true;
       }
     } catch (embeddingError: any) {
