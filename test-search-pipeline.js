@@ -5,7 +5,7 @@
  * Run with: node test-search-pipeline.js
  */
 
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+const BASE_URL = process.env.BASE_URL || 'https://cursortutorial.ai';
 
 async function testEndpoint(endpoint, method = 'GET', body = null) {
   try {

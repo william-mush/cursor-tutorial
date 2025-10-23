@@ -29,7 +29,7 @@ export function StructuredData() {
         "@id": "https://cursortutorial.ai/#website",
         "url": "https://cursortutorial.ai",
         "name": "Cursor Tutorial",
-        "description": "Master Cursor 0.45.14 with comprehensive tutorials on Tab completion, Cmd+K, AI Chat, Composer, @ symbols, and more",
+        "description": "Master Cursor 1.7.54 with comprehensive tutorials on Tab completion, Cmd+K, AI Chat, Composer, @ symbols, and more",
         "publisher": {
           "@id": "https://cursortutorial.ai/#organization"
         },
@@ -43,7 +43,7 @@ export function StructuredData() {
         "@type": "Course",
         "@id": "https://cursortutorial.ai/#main-course",
         "name": "Complete Cursor AI Editor Tutorial",
-        "description": "Master Cursor 0.45.14 with Tab completion, Cmd+K inline editing, AI Chat, Composer, @ symbols, and Cursor Rules. Learn Claude 4.5 Sonnet integration in 10 minutes.",
+        "description": "Master Cursor 1.7.54 with Tab completion, Cmd+K inline editing, AI Chat, Composer, @ symbols, and Cursor Rules. Learn Claude 4.5 Sonnet integration in 10 minutes.",
         "provider": {
           "@id": "https://cursortutorial.ai/#organization"
         },
@@ -200,7 +200,7 @@ export function StructuredData() {
       {
         "@type": "HowTo",
         "name": "How to Get Started with Cursor AI Editor",
-        "description": "Learn Cursor 0.45.14 and become 10x faster in 10 minutes",
+        "description": "Learn Cursor 1.7.54 and become 10x faster in 10 minutes",
         "totalTime": "PT10M",
         "step": [
           {
