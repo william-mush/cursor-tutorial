@@ -1,8 +1,19 @@
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Lazy initialization to avoid build-time errors
+let openai: OpenAI | null = null;
+
+function getOpenAI(): OpenAI {
+  if (!openai) {
+    if (!process.env.OPENAI_API_KEY) {
+      throw new Error('OPENAI_API_KEY environment variable is not set');
+    }
+    openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+  }
+  return openai;
+}
 
 /**
  * Generate embeddings for text using OpenAI's text-embedding-3-small model
@@ -13,7 +24,8 @@ const openai = new OpenAI({
  */
 export async function generateEmbedding(text: string, dimensions: number = 1536): Promise<number[]> {
   try {
-    const response = await openai.embeddings.create({
+    const openaiClient = getOpenAI();
+    const response = await openaiClient.embeddings.create({
       model: 'text-embedding-3-small',
       input: text.slice(0, 8000), // Limit to ~8K chars to stay within token limits
       encoding_format: 'float',
@@ -36,6 +48,7 @@ export async function generateEmbedding(text: string, dimensions: number = 1536)
  */
 export async function generateEmbeddingsBatch(texts: string[], dimensions: number = 1536): Promise<number[][]> {
   try {
+    const openaiClient = getOpenAI();
     // OpenAI allows up to 2048 inputs per request
     const batchSize = 2048;
     const embeddings: number[][] = [];
@@ -43,7 +56,7 @@ export async function generateEmbeddingsBatch(texts: string[], dimensions: numbe
     for (let i = 0; i < texts.length; i += batchSize) {
       const batch = texts.slice(i, i + batchSize).map(t => t.slice(0, 8000));
       
-      const response = await openai.embeddings.create({
+      const response = await openaiClient.embeddings.create({
         model: 'text-embedding-3-small',
         input: batch,
         encoding_format: 'float',

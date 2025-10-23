@@ -19,12 +19,22 @@ interface SearchResponse {
   responseTimeMs: number;
 }
 
+interface StreamingSearchResponse {
+  answer: string;
+  isComplete: boolean;
+  sources?: Source[];
+  relatedQuestions?: string[];
+  responseTimeMs?: number;
+}
+
 export function SearchResults() {
   const searchParams = useSearchParams();
   const query = searchParams?.get('q') || '';
   
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<SearchResponse | null>(null);
+  const [streamingAnswer, setStreamingAnswer] = useState('');
+  const [isStreaming, setIsStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copiedToClipboard, setCopiedToClipboard] = useState(false);
   const [feedback, setFeedback] = useState<'helpful' | 'not-helpful' | null>(null);
@@ -37,11 +47,13 @@ export function SearchResults() {
 
   const searchQuery = async (searchQuery: string) => {
     setIsLoading(true);
+    setIsStreaming(true);
     setError(null);
     setResult(null);
+    setStreamingAnswer('');
 
     try {
-      const response = await fetch('/api/search/ask', {
+      const response = await fetch('/api/search/stream', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,19 +66,61 @@ export function SearchResults() {
         throw new Error(errorData.error || 'Search failed');
       }
 
-      const data = await response.json();
-      setResult(data.data);
+      if (!response.body) {
+        throw new Error('No response body');
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value);
+        const lines = chunk.split('\n');
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            try {
+              const data = JSON.parse(line.slice(6));
+              
+              if (data.type === 'error') {
+                throw new Error(data.error);
+              }
+              
+              if (data.answer) {
+                setStreamingAnswer(data.answer);
+              }
+              
+              if (data.isComplete && data.sources && data.relatedQuestions) {
+                setResult({
+                  answer: data.answer,
+                  sources: data.sources,
+                  relatedQuestions: data.relatedQuestions,
+                  responseTimeMs: data.responseTimeMs || 0,
+                });
+                setIsStreaming(false);
+              }
+            } catch (parseError) {
+              console.error('Error parsing streaming data:', parseError);
+            }
+          }
+        }
+      }
     } catch (err: any) {
       console.error('Search error:', err);
       setError(err.message || 'Failed to search. Please try again.');
+      setIsStreaming(false);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleCopyAnswer = () => {
-    if (result) {
-      navigator.clipboard.writeText(result.answer);
+    const textToCopy = result?.answer || streamingAnswer;
+    if (textToCopy) {
+      navigator.clipboard.writeText(textToCopy);
       setCopiedToClipboard(true);
       setTimeout(() => setCopiedToClipboard(false), 2000);
     }
@@ -109,6 +163,72 @@ export function SearchResults() {
       <div className="bg-white rounded-xl p-12 shadow-lg text-center">
         <Loader2 className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
         <p className="text-gray-600 text-lg">Searching Cursor documentation...</p>
+      </div>
+    );
+  }
+
+  // Show streaming answer while it's being generated
+  if (isStreaming && streamingAnswer) {
+    return (
+      <div className="space-y-6">
+        {/* Question */}
+        <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 border-2 border-blue-200">
+          <div className="flex items-start space-x-3">
+            <Sparkles className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+            <div>
+              <div className="text-sm text-gray-600 font-medium mb-1">Your Question:</div>
+              <div className="text-lg font-semibold text-gray-900">{query}</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Streaming Answer */}
+        <div className="bg-white rounded-xl p-8 shadow-lg border border-gray-200">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center space-x-2">
+              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                <Sparkles className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <div className="font-semibold text-gray-900">Cursor AI Assistant</div>
+                <div className="text-xs text-gray-500 flex items-center">
+                  Powered by Claude 4.5 Haiku • 
+                  <span className="ml-1 flex items-center">
+                    <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></span>
+                    Streaming...
+                  </span>
+                </div>
+              </div>
+            </div>
+            
+            <button
+              onClick={handleCopyAnswer}
+              className="flex items-center space-x-2 px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              {copiedToClipboard ? (
+                <>
+                  <Check className="w-4 h-4 text-green-600" />
+                  <span className="text-sm text-green-600">Copied!</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="w-4 h-4" />
+                  <span className="text-sm">Copy</span>
+                </>
+              )}
+            </button>
+          </div>
+
+          <div className="prose prose-blue max-w-none">
+            <ReactMarkdown>{streamingAnswer}</ReactMarkdown>
+            {isStreaming && (
+              <div className="flex items-center mt-4 text-sm text-gray-500">
+                <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                <span>Generating answer...</span>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     );
   }

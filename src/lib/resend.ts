@@ -1,14 +1,17 @@
 import { Resend } from 'resend';
 
 // Initialize Resend with error handling
-let resend: Resend;
-try {
-  resend = new Resend(process.env.RESEND_API_KEY || 're_placeholder_key');
-  console.log('Resend initialized successfully');
-} catch (error) {
-  console.error('Failed to initialize Resend:', error);
-  // Create a dummy resend object to prevent crashes
-  resend = {} as Resend;
+let resend: Resend | null = null;
+if (process.env.RESEND_API_KEY && process.env.RESEND_API_KEY !== '') {
+  try {
+    resend = new Resend(process.env.RESEND_API_KEY);
+    console.log('Resend initialized successfully');
+  } catch (error) {
+    console.error('Failed to initialize Resend:', error);
+    resend = null;
+  }
+} else {
+  console.log('Resend API key not configured');
 }
 
 export async function sendEmailSignup(email: string, name?: string) {
@@ -20,7 +23,7 @@ export async function sendEmailSignup(email: string, name?: string) {
     });
 
     // Check if we have a valid API key
-    if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 'your_resend_api_key_here') {
+    if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === '') {
       console.log('Resend API key not configured, using fallback email service');
       
       // Fallback: Send a simple notification email using a webhook or external service
@@ -43,7 +46,7 @@ export async function sendEmailSignup(email: string, name?: string) {
     console.log('Sending email with Resend to:', email);
     
     // Check if resend is properly initialized
-    if (!resend || !resend.emails) {
+    if (!resend) {
       console.error('Resend not properly initialized, falling back to logging');
       console.log('Email signup received (fallback):', { 
         email, 
@@ -72,8 +75,7 @@ export async function sendEmailSignup(email: string, name?: string) {
       console.error('Resend error details:', {
         error,
         message: error.message,
-        name: error.name,
-        statusCode: error.statusCode
+        name: error.name
       });
       return false;
     }

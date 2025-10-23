@@ -5,20 +5,32 @@ import emailjs from '@emailjs/browser';
 // After signing up, replace these with your actual credentials
 
 export const EMAILJS_CONFIG = {
-  serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || 'service_kzjlr95',
-  templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || 'template_9djbz4n',
-  publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || 'jrMuW6cVDEX59FkvP',
+  serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || '',
+  templateId: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || '',
+  publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || '',
 };
 
 // Initialize EmailJS
 export function initEmailJS() {
-  if (EMAILJS_CONFIG.publicKey !== 'YOUR_PUBLIC_KEY') {
+  if (EMAILJS_CONFIG.publicKey && EMAILJS_CONFIG.publicKey !== '') {
     emailjs.init(EMAILJS_CONFIG.publicKey);
   }
 }
 
 export async function sendEmailSignup(email: string, name?: string) {
   try {
+    // Check if EmailJS is properly configured
+    if (!EMAILJS_CONFIG.serviceId || !EMAILJS_CONFIG.templateId || !EMAILJS_CONFIG.publicKey) {
+      console.log('EmailJS not configured, skipping email send');
+      console.log('Email signup received (fallback):', { 
+        email, 
+        name: name || 'Anonymous', 
+        timestamp: new Date().toISOString(),
+        website: 'Cursor Tutorial'
+      });
+      return true;
+    }
+
     console.log('EmailJS Config:', EMAILJS_CONFIG);
     console.log('Environment check:', {
       serviceId: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,

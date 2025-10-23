@@ -7,12 +7,7 @@ export default function CursorSettingsLesson() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-4xl mx-auto">
-        <TutorialNavigation 
-          prevHref="/tutorial/advanced"
-          prevTitle="Advanced Tutorials"
-          nextHref="/tutorial/advanced/lessons/prompt-engineering"
-          nextTitle="Advanced Prompt Engineering"
-        />
+        <TutorialNavigation />
 
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
@@ -415,12 +410,7 @@ Thumbs.db`}
           </div>
         </div>
 
-        <TutorialNavigation 
-          prevHref="/tutorial/advanced"
-          prevTitle="Advanced Tutorials"
-          nextHref="/tutorial/advanced/lessons/prompt-engineering"
-          nextTitle="Advanced Prompt Engineering"
-        />
+        <TutorialNavigation />
       </div>
     </div>
   );

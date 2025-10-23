@@ -19,7 +19,7 @@ export interface SearchConfig {
  * Default configuration (optimized for speed)
  */
 export const DEFAULT_CONFIG: SearchConfig = {
-  embeddingDimensions: 512, // Fast mode by default
+  embeddingDimensions: 512, // Fast mode for better performance
   maxSources: 4,
   matchThreshold: 0.35,
   enableCaching: true, // Redis caching enabled

@@ -50,7 +50,7 @@ export function Hero() {
                   <Brain className="w-8 h-8 mr-4 text-blue-600" />
                   Ask AI About Cursor
                 </h2>
-                <p className="text-gray-600 text-lg">Voice-enabled • Instant answers • Powered by Claude 4.5</p>
+                <p className="text-gray-600 text-lg">Voice-enabled • Instant answers • Powered by Claude 4.5 Haiku</p>
               </div>
               <SearchBar 
                 placeholder="How do I use Tab completion?"

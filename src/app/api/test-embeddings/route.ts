@@ -25,12 +25,12 @@ export async function GET() {
     }
     
     // Check if embeddings exist
-    const hasEmbeddings = content?.some(row => row.embedding && Array.isArray(row.embedding) && row.embedding.length > 0);
+    const hasEmbeddings = content?.some((row: any) => row.embedding && Array.isArray(row.embedding) && row.embedding.length > 0);
     
     // Check if search function exists
     const { data: functionTest, error: functionError } = await supabaseAdmin
       .rpc('search_cursor_content', {
-        query_embedding: new Array(1536).fill(0), // Dummy embedding
+        query_embedding: new Array(512).fill(0), // Dummy embedding (512 dimensions)
         match_threshold: 0.5,
         match_count: 1
       });

@@ -35,7 +35,7 @@
     "search:health": "curl http://localhost:3000/api/search/health"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.65.0",
+    "@anthropic-ai/sdk": "^0.67.0",
     "@emailjs/browser": "^4.4.1",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-dialog": "^1.1.15",

@@ -45,7 +45,7 @@ export async function GET() {
       totalContent: allContent?.length || 0,
       withoutEmbeddings: noEmbeddings?.length || 0,
       withEmbeddings: withEmbeddings?.length || 0,
-      sampleContent: allContent?.slice(0, 2).map(item => ({
+      sampleContent: allContent?.slice(0, 2).map((item: any) => ({
         id: item.id,
         title: item.metadata?.title || 'Unknown',
         hasEmbedding: item.embedding !== null,
@@ -58,7 +58,7 @@ export async function GET() {
     return NextResponse.json({
       success: true,
       analysis,
-      allContent: allContent?.map(item => ({
+      allContent: allContent?.map((item: any) => ({
         id: item.id,
         title: item.metadata?.title || 'Unknown',
         hasEmbedding: item.embedding !== null,

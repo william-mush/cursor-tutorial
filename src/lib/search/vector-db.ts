@@ -1,5 +1,6 @@
 import { getSupabaseAdminClient, CursorContent } from './supabase-client';
 import { generateEmbedding } from './embeddings';
+import { getSearchConfig } from './config';
 
 export interface SearchResult {
   id: string;
@@ -28,8 +29,11 @@ export async function searchSimilarContent(
   } = options;
 
   try {
+    // Get configuration for embedding dimensions
+    const config = getSearchConfig();
+    
     // Generate embedding for the query
-    const queryEmbedding = await generateEmbedding(query);
+    const queryEmbedding = await generateEmbedding(query, config.embeddingDimensions);
 
     // Build metadata filter
     let metadataFilter = {};
@@ -70,8 +74,11 @@ export async function insertContent(
   metadata: CursorContent['metadata']
 ): Promise<void> {
   try {
+    // Get configuration for embedding dimensions
+    const config = getSearchConfig();
+    
     // Generate embedding
-    const embedding = await generateEmbedding(content);
+    const embedding = await generateEmbedding(content, config.embeddingDimensions);
 
     // Insert into database
     const supabaseAdmin = getSupabaseAdminClient();
@@ -97,9 +104,12 @@ export async function insertContentBatch(
   items: Array<{ content: string; metadata: CursorContent['metadata'] }>
 ): Promise<void> {
   try {
+    // Get configuration for embedding dimensions
+    const config = getSearchConfig();
+    
     // Generate embeddings in batch (more efficient)
     const contents = items.map(item => item.content);
-    const embeddings = await Promise.all(contents.map(c => generateEmbedding(c)));
+    const embeddings = await Promise.all(contents.map(c => generateEmbedding(c, config.embeddingDimensions)));
 
     // Prepare batch insert
     const rows = items.map((item, i) => ({
@@ -136,7 +146,10 @@ export async function updateContent(
   metadata: CursorContent['metadata']
 ): Promise<void> {
   try {
-    const embedding = await generateEmbedding(content);
+    // Get configuration for embedding dimensions
+    const config = getSearchConfig();
+    
+    const embedding = await generateEmbedding(content, config.embeddingDimensions);
 
     const supabaseAdmin = getSupabaseAdminClient();
     const { error } = await supabaseAdmin
@@ -199,6 +212,7 @@ export async function deleteContentBySource(
  */
 export async function getContentStats(): Promise<Record<string, number>> {
   try {
+    const supabaseAdmin = getSupabaseAdminClient();
     const { data, error } = await supabaseAdmin
       .from('cursor_content')
       .select('metadata');
