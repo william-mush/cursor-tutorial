@@ -126,7 +126,7 @@ Focus on practical, actionable advice.`;
     // Add timeout to prevent very slow responses
     const claudeResponse = await Promise.race([
       anthropic.messages.create({
-        model: 'claude-4-5-haiku-20241201', // Latest Claude 4.5 Haiku model
+        model: 'claude-3-5-haiku-20241022', // Latest Claude 4.5 Haiku model
         max_tokens: 1000, // Optimized for speed
         temperature: 0.1, // Lower temperature for faster, more deterministic responses
         system: systemPrompt,
@@ -400,7 +400,7 @@ Focus on practical, actionable advice.`;
 
     // Stream the response
     const stream = await anthropic.messages.create({
-      model: 'claude-4-5-haiku-20241201',
+      model: 'claude-3-5-haiku-20241022',
       max_tokens: 1000,
       temperature: 0.1,
       system: systemPrompt,
@@ -425,7 +425,7 @@ Focus on practical, actionable advice.`;
       // Fallback: if streaming doesn't work, get the full response
       console.log('⚠️ Streaming not available, falling back to non-streaming response');
       const response = await anthropic.messages.create({
-        model: 'claude-4-5-haiku-20241201',
+        model: 'claude-3-5-haiku-20241022',
         max_tokens: 1000,
         temperature: 0.1,
         system: systemPrompt,

@@ -81,7 +81,7 @@ Format as clean markdown:
 Focus on practical, actionable advice.`;
 
     const response = await anthropic.messages.create({
-      model: 'claude-4-5-haiku-20241201',
+      model: 'claude-3-5-haiku-20241022',
       max_tokens: 1000,
       temperature: 0.1,
       system: systemPrompt,

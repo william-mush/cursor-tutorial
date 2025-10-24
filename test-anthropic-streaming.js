@@ -19,7 +19,7 @@ async function testAnthropicStreaming() {
   try {
     console.log('📡 Creating streaming request...');
     const stream = await anthropic.messages.create({
-      model: 'claude-4-5-haiku-20241201',
+      model: 'claude-3-5-haiku-20241022',
       max_tokens: 100,
       messages: [{ role: 'user', content: 'Say hello' }],
       stream: true,
