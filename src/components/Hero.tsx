@@ -25,14 +25,14 @@ export function Hero() {
             <h1 className="text-6xl lg:text-7xl xl:text-8xl font-bold text-gray-900 leading-tight mb-8">
               Master{" "}
               <span className="gradient-text bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
-                Cursor 1.7.54
+                Cursor 0.45.14
               </span>
               <br />
               Development
             </h1>
             
             <p className="text-xl lg:text-2xl text-gray-600 leading-relaxed max-w-4xl mx-auto mb-8">
-              Complete Cursor 1.7.54 tutorial with Browser Control, Hooks, Team Rules,
+              Complete Cursor 0.45.14 tutorial with Browser Control, Hooks, Team Rules,
               <br />
               Sandboxed Terminals, and latest AI features.
               <br />

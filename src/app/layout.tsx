@@ -11,15 +11,15 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "Cursor Tutorial - Master AI-Powered Development with Cursor 1.7.54",
+    default: "Cursor Tutorial - Master AI-Powered Development with Cursor 0.45.14",
     template: "%s | Cursor Tutorial"
   },
-  description: "Complete Cursor 1.7.54 tutorial with Tab completion, Cmd+K, AI Chat, Composer, and Claude 4.5 Haiku. Learn AI-powered development in 10 minutes. Free guide with real examples.",
+  description: "Complete Cursor 0.45.14 tutorial with Tab completion, Cmd+K, AI Chat, Composer, and Claude 4.5 Haiku. Learn AI-powered development in 10 minutes. Free guide with real examples.",
   keywords: [
     // Core Features
     "Cursor tutorial",
     "Cursor 1.7 guide",
-    "Cursor 1.7.54",
+    "Cursor 0.45.14",
     "Cursor AI editor",
     "Tab completion Cursor",
     "Cmd+K Cursor inline edit",
@@ -64,8 +64,8 @@ export const metadata: Metadata = {
   category: 'education',
   classification: 'Tutorial',
   openGraph: {
-    title: "Cursor Tutorial - Master AI-Powered Development with Cursor 1.7.54",
-    description: "Complete Cursor 1.7.54 tutorial with Tab completion, Cmd+K, AI Chat, Composer, and Claude 4.5 Haiku. Learn in 10 minutes with real examples.",
+    title: "Cursor Tutorial - Master AI-Powered Development with Cursor 0.45.14",
+    description: "Complete Cursor 0.45.14 tutorial with Tab completion, Cmd+K, AI Chat, Composer, and Claude 4.5 Haiku. Learn in 10 minutes with real examples.",
     url: 'https://cursortutorial.ai',
     siteName: 'Cursor Tutorial',
     images: [
@@ -82,7 +82,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: "Cursor Tutorial - Master AI Development in 10 Minutes",
-    description: "Complete Cursor 1.7.54 tutorial: Tab completion, Cmd+K, AI Chat, Composer. Real examples with Claude 4.5 Haiku.",
+    description: "Complete Cursor 0.45.14 tutorial: Tab completion, Cmd+K, AI Chat, Composer. Real examples with Claude 4.5 Haiku.",
     images: ['/og-image.png'],
     creator: '@cursortutorial',
   },
