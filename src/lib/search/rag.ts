@@ -432,7 +432,7 @@ Focus on practical, actionable advice.`;
         messages,
       });
       
-      fullAnswer = response.content[0].text;
+      fullAnswer = response.content[0].type === 'text' ? response.content[0].text : '';
       yield {
         answer: fullAnswer,
         isComplete: true,
