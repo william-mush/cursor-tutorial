@@ -399,7 +399,7 @@ Focus on practical, actionable advice.`;
     ];
 
     // Stream the response
-    const stream = anthropic.messages.create({
+    const stream = await anthropic.messages.create({
       model: 'claude-4-5-haiku-20241201',
       max_tokens: 1000,
       temperature: 0.1,
@@ -410,15 +410,33 @@ Focus on practical, actionable advice.`;
 
     let fullAnswer = '';
     
-    // Handle the stream properly
-    for await (const chunk of stream) {
-      if (chunk.type === 'content_block_delta' && chunk.delta.type === 'text_delta') {
-        fullAnswer += chunk.delta.text;
-        yield {
-          answer: fullAnswer,
-          isComplete: false,
-        };
+    // Handle the stream properly - check if it's iterable
+    if (stream && typeof stream[Symbol.asyncIterator] === 'function') {
+      for await (const chunk of stream) {
+        if (chunk.type === 'content_block_delta' && chunk.delta.type === 'text_delta') {
+          fullAnswer += chunk.delta.text;
+          yield {
+            answer: fullAnswer,
+            isComplete: false,
+          };
+        }
       }
+    } else {
+      // Fallback: if streaming doesn't work, get the full response
+      console.log('⚠️ Streaming not available, falling back to non-streaming response');
+      const response = await anthropic.messages.create({
+        model: 'claude-4-5-haiku-20241201',
+        max_tokens: 1000,
+        temperature: 0.1,
+        system: systemPrompt,
+        messages,
+      });
+      
+      fullAnswer = response.content[0].text;
+      yield {
+        answer: fullAnswer,
+        isComplete: true,
+      };
     }
 
     // 4. Format sources with better snippets
