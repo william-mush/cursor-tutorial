@@ -53,6 +53,7 @@ export function SearchResults() {
     setStreamingAnswer('');
 
     try {
+      // Try streaming first
       const response = await fetch('/api/search/stream', {
         method: 'POST',
         headers: {
@@ -109,9 +110,41 @@ export function SearchResults() {
         }
       }
     } catch (err: any) {
-      console.error('Search error:', err);
-      setError(err.message || 'Failed to search. Please try again.');
-      setIsStreaming(false);
+      console.error('Streaming search failed, trying simple API:', err);
+      
+      // Fallback to simple API
+      try {
+        const simpleResponse = await fetch('/api/search/simple', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ question: searchQuery }),
+        });
+
+        if (!simpleResponse.ok) {
+          const errorData = await simpleResponse.json();
+          throw new Error(errorData.error || 'Search failed');
+        }
+
+        const simpleData = await simpleResponse.json();
+        
+        if (simpleData.success && simpleData.data) {
+          setResult({
+            answer: simpleData.data.answer,
+            sources: simpleData.data.sources,
+            relatedQuestions: simpleData.data.relatedQuestions,
+            responseTimeMs: simpleData.data.responseTimeMs || 0,
+          });
+          setIsStreaming(false);
+        } else {
+          throw new Error('Invalid response from simple API');
+        }
+      } catch (fallbackErr: any) {
+        console.error('Simple search also failed:', fallbackErr);
+        setError(fallbackErr.message || 'Failed to search. Please try again.');
+        setIsStreaming(false);
+      }
     } finally {
       setIsLoading(false);
     }
