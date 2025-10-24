@@ -13,7 +13,7 @@ CREATE EXTENSION IF NOT EXISTS vector;
 CREATE TABLE IF NOT EXISTS cursor_content (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   content TEXT NOT NULL,
-  embedding vector(1536), -- OpenAI text-embedding-3-small dimensions (1536 for full precision)
+  embedding vector(512), -- OpenAI text-embedding-3-small dimensions (512 for speed)
   metadata JSONB NOT NULL,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -68,7 +68,7 @@ EXECUTE FUNCTION update_updated_at_column();
 -- ============================================
 
 CREATE OR REPLACE FUNCTION search_cursor_content(
-  query_embedding vector(1536),
+  query_embedding vector(512),
   match_threshold float DEFAULT 0.7,
   match_count int DEFAULT 10,
   metadata_filter jsonb DEFAULT '{}'::jsonb
@@ -187,7 +187,7 @@ RETURNS TABLE (
 LANGUAGE plpgsql
 AS $$
 DECLARE
-  query_embedding vector(1536);
+  query_embedding vector(512);
 BEGIN
   -- Get the embedding of the source content
   SELECT embedding INTO query_embedding

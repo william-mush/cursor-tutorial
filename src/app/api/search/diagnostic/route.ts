@@ -69,7 +69,7 @@ export async function GET() {
         try {
           const { data: searchTest, error: searchError } = await supabaseAdmin
             .rpc('search_cursor_content', {
-              query_embedding: new Array(1536).fill(0),
+              query_embedding: new Array(512).fill(0),
               match_threshold: 0.5,
               match_count: 1
             });

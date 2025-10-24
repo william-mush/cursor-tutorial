@@ -19,7 +19,7 @@ export interface SearchConfig {
  * Default configuration (optimized for speed)
  */
 export const DEFAULT_CONFIG: SearchConfig = {
-  embeddingDimensions: 1536, // Full precision mode for better accuracy
+  embeddingDimensions: 512, // Fast mode for better performance
   maxSources: 4,
   matchThreshold: 0.35,
   enableCaching: true, // Redis caching enabled
@@ -47,7 +47,7 @@ export function getSearchConfig(): SearchConfig {
     console.log('🚀 Using FAST mode (512 dimensions)');
     return FAST_CONFIG;
   } else {
-    console.log('🎯 Using PRECISION mode (1536 dimensions)');
+    console.log('🎯 Using PRECISION mode (512 dimensions)');
     return DEFAULT_CONFIG;
   }
 }
