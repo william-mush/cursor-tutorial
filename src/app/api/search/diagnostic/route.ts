@@ -90,8 +90,8 @@ export async function GET() {
 
     // Test embedding generation
     try {
-      const testEmbedding = await generateEmbedding('test query', 1536);
-      if (testEmbedding && testEmbedding.length === 1536) {
+      const testEmbedding = await generateEmbedding('test query', 512);
+      if (testEmbedding && testEmbedding.length === 512) {
         diagnostics.embeddings.canGenerate = true;
       }
     } catch (embeddingError: any) {

@@ -411,8 +411,7 @@ Focus on practical, actionable advice.`;
     let fullAnswer = '';
     
     // Handle the stream properly
-    const streamIterator = stream as any;
-    for await (const chunk of streamIterator) {
+    for await (const chunk of stream) {
       if (chunk.type === 'content_block_delta' && chunk.delta.type === 'text_delta') {
         fullAnswer += chunk.delta.text;
         yield {

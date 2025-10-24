@@ -93,11 +93,13 @@ export async function POST(request: NextRequest) {
           // Generate streaming answer using RAG
           const startTime = Date.now();
           
-          for await (const chunk of answerQuestionStream(question, {
+          const streamGenerator = answerQuestionStream(question, {
             conversationHistory,
             maxSources: 8,
             temperature: 0.3,
-          })) {
+          });
+          
+          for await (const chunk of streamGenerator) {
             // Send chunk as Server-Sent Events
             const data = JSON.stringify({
               type: chunk.isComplete ? 'complete' : 'partial',
